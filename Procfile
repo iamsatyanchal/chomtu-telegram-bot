@@ -1,1 +1,1 @@
-worker: node app.js -p $PORT
+web: app -p $PORT
