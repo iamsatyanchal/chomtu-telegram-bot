@@ -5,62 +5,67 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ChomtuBot- A telegram bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height, target-densitydpi=medium-dpi" />
+
     <link rel="stylesheet" href="css/index.css">
     <!-- Font aweomse -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <!-- BootStrap -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" defer>
 </head>
 
 <body>
-    <navbar>
-        <nav>
+        <nav class="navigation">
             <div class="bot-name">
-                🤖 Chomtu
+                <span class="robot">🤖</span> Chomtu
             </div>
-            <ul class="navlinks">
+            <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-    </navbar>
-    <main>
-        <header class="head" id="home">
-            <div class="">
+    <main class="container-fluid">
+        <header class="head row" id="home">
+            <div class="col-md-6">
                 <h1>Everybody needs a Chomtu.</h1>
                 <h5 class="bot-disc">A simple and responsive telegram bot.</h5>
                 <div class="button-div">
-            		<a href="https://t.me/chomtubot" target="_blank" id="invite-btn">Invite Me</a>
-            	</div>
+                    <a href="https://t.me/chomtubot" target="_blank" id="invite-btn">Invite Me</a>
+                </div>
             </div>
-            <div>
+            <div class="col-md-6">
                 <img src="./imgs/bot_icon.png" alt="bot_icon" class="robot-icon">
             </div>
         </header>
-        <section class='status' id="about">
-            <div>
-                <img src="./imgs/bot_status.png" alt="status_png" class="status-img" width="800">
+        <section class='status row' id="about">
+            <div class="col-lg-6">
+                <img src="./imgs/bot_status.png" alt="status_png" class="status-img">
             </div>
-            <div class="status-desc">
-            	<h2>
-                	Always up!
-            	</h2>
-            <ul class="features">
-                <li class="feature"> Fast</li>
-                <li class="feature"> Responsive</li>
-                <li class="feature"> Fun</li>
-            </ul>
+            <div class="status-desc col-lg-6">
+                <h2>
+                    Always up!
+                </h2>
+                <ul class="features">
+                    <li class="feature"> Fast</li>
+                    <li class="feature"> Responsive</li>
+                    <li class="feature"> Fun</li>
+                </ul>
             </div>
         </section>
-        <footer class="footer" id="contact">
+    </main>
+
+    <footer class="footer" id="contact">
             <div class="creator">
-            	Connect with the creator
+                Connect with the creator
             </div>
             <ul>
-            	<li><a target="_blank" href="https://github.com/astrix29"><i class="fab fa-github fa-2x"></i></a></li>
-            	<li><a target="_blank" href="https://twitter.com/aarsen1c"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li><a target="_blank" href="https://github.com/astrix29"><i class="fab fa-github fa-2x"></i></a></li>
+                <li><a target="_blank" href="https://twitter.com/aarsen1c"><i class="fab fa-twitter fa-2x"></i></a></li>
             </ul>
         </footer>
-    </main>
 </body>
 
 </html>
