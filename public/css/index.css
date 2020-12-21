@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Overlock+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap');
 
 /* Colors and Fonts */
 :root {
@@ -20,16 +20,17 @@ html {
 }
 
 ::selection {
-	background: #ebfbff;
-	color: var(--bg-black);
-	text-shadow: none;
+    background: #ebfbff;
+    color: var(--bg-black);
+    text-shadow: none;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Overlock SC', cursive;
+    font-family: 'Nunito', sans-serif;
+
 }
 
 body {
@@ -92,7 +93,7 @@ main {
     align-items: center;
 }
 .head h1 {
-	font-size: var(--big)
+    font-size: var(--big)
 }
 
 .robot-icon {
@@ -101,33 +102,33 @@ main {
 }
 
 .features {
-	margin-top: 1rem;
-	line-height: 0.2;
-	color: #fff;
-	text-shadow: none;
-	border-left: 1px solid #fff;
+    margin-top: 1rem;
+    line-height: 0.2;
+    color: #fff;
+    text-shadow: none;
+    border-left: 1px solid #fff;
 }
 
 .feature::before {
-	content: '🡢';
-	color: var(--blue);
-	text-shadow: 0px 0px 2px;
+    content: '🡢';
+    color: var(--blue);
+    text-shadow: 0px 0px 2px;
 }
 
 /* Invite Button */
 #invite-btn {
-	text-decoration: none;
-	background: #6fb4c7;
-	/*text-shadow: none;*/
-	font-size: var(--medium);
-	display: inline-block;
-	padding: 1rem;
-	margin-top: 1rem;
-	color: #fff;
-	border-radius: 5px;
+    text-decoration: none;
+    background: #6fb4c7;
+    /*text-shadow: none;*/
+    font-size: var(--medium);
+    display: inline-block;
+    padding: 1rem;
+    margin-top: 1rem;
+    color: #fff;
+    border-radius: 5px;
 }
 #invite-btn:hover {
-	background: var(--blue)
+    background: var(--blue)
 }
 
 /* Status Section */
@@ -142,37 +143,37 @@ main {
 }
 
 .status-desc {
-	padding-left: 5rem;
-	font-size: var(--medium)
+    padding-left: 5rem;
+    font-size: var(--medium)
 }
 .status-desc > h2 {
-	text-shadow: 0px 0px 2px;
+    text-shadow: 0px 0px 2px;
 }
 
 .status-img {
-	max-width: 100%;
-	height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 /* Footer */
 .footer {
-	background: #071417;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 2rem;
+    background: #071417;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
 }
 .footer > ul {
-	display: flex;
+    display: flex;
 }
 .creator {
-	font-size: var(--medium);
-	color: #fff;
+    font-size: var(--medium);
+    color: #fff;
 }
 
 a {
-	color: var(--blue);
+    color: var(--blue);
 }
 a:hover {
-	color: #fff;
+    color: #fff;
 }
