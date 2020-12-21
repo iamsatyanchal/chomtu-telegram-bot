@@ -243,4 +243,46 @@ main {
         padding: 0;
     }
 
+    @media (max-width: 420px) {
+    nav {
+        /*justify-content: center;*/
+        align-items: center;
+    }
+    .nav-links a {
+        display: none;
+    }
+
+    .head {
+        padding: 5px;
+    }
+
+    .status {
+        padding: 0 5px;
+        padding-top: 10px;
+    }
+
+    .status-desc {
+        font-size: 1rem;
+        padding: 5px;
+    }
+
+    .footer {
+        padding: 5px;
+        font-size: var(--tiny)
+    }
+
+    #invite-btn {
+        padding: 5px;
+        font-size: var(--normal)
+    }
+
+    .features {
+        border: none;
+        padding: 0;
+    }
+
+    .creator {
+        font-size: 1rem;
+    }
+
 }
