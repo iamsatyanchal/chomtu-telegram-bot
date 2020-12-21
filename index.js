@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const startChomtu = require("./app.js");
 
+app.use(express.static('public'))
+
 app.get("/", (req, res) => {
-	res.send("Hello world! Bot is up and running");
+	res.render('index.html');
 });
 
 // Run the bot 
