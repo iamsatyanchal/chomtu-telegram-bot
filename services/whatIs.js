@@ -14,6 +14,7 @@ const searchWord = (word) => {
         .then((response) => {
             return {
                 status: "success",
+                word: word,
                 definition: response.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0],
                 shortDefinitions: response.data.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions[0],
             };
@@ -30,7 +31,7 @@ const whatIs = async (word) => {
         return { markdown: "no word found" };
     }
     return {
-       markdown: `*Definition*:\t ${result.definition}\n\n*Short-Definition*:\t ${result.shortDefinitions}`
+       markdown: `📕 Oxford Dictionary\n\n*Word*:\t ${result.word}\n\n*Definition*:\t ${result.definition}\n\n*Short-Definition*:\t ${result.shortDefinitions}`
     };
 };
 

@@ -4,9 +4,10 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_API);
 
 const getDoggo = require("./services/getDoggo.js");
-const getWeather = require('./services/getWeather.js')
-const getAQI = require('./services/getAQI.js')
-const whatIs = require('./services/whatIs.js')
+const getWeather = require('./services/getWeather.js');
+const getAQI = require('./services/getAQI.js');
+const whatIs = require('./services/whatIs.js');
+const ud = require('./services/urban.js');
 
 // START command
 bot.command("start", (ctx) => {
@@ -57,10 +58,17 @@ bot.command("whatis", async (ctx) => {
     ctx.replyWithMarkdown(`${result.markdown}`)
 });
 
+// URBAN-DICTIONARY
+bot.command('urban', async (ctx) => {
+    const query = ctx.message.text.split(" ")[1];
+    const result = await ud(query);
+    ctx.replyWithMarkdown(`${result.markdown}`);
+})
+
 // HELP Command
 bot.command("help", (ctx) => {
     ctx.reply(`
-        /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/whatis - returns definition
+        /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/whatis - returns definition\n/urban- urban dictionary definition 
     `);
 });
 
