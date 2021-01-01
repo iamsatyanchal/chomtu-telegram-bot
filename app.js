@@ -12,7 +12,7 @@ const ud = require('./services/urban.js');
 // START command
 bot.command("start", (ctx) => {
     ctx.replyWithMarkdown(`
-        *What's poppin, bitch?*\n\nType /help to see all the avaibale commands
+        *Waddup?*\n\nType /help to see all the available commands
     `);
 });
 
