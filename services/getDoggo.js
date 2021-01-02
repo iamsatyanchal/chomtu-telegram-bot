@@ -1,8 +1,11 @@
 const axios = require("axios");
 
 const getDoggo = () => {
+    // Allowed extensions
     const images = ["png", "jpg", "jpeg"];
     const video = ["mp4", "gif"];
+
+    // Grab a new doggo-URL and return it
     return axios
         .get("https://random.dog/woof.json")
         .then((result) => {
@@ -13,5 +16,4 @@ const getDoggo = () => {
         });
 };
 
-// DOGGO image
 module.exports = getDoggo;

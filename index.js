@@ -4,6 +4,7 @@ const startChomtu = require("./app.js");
 
 app.use(express.static('public'))
 
+// Root route
 app.get("/", (req, res) => {
 	res.render('index.html');
 });

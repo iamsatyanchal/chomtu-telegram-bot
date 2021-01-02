@@ -11,11 +11,13 @@ function aqi_color(value) {
 }
 
 const getAQI = (city) => {
+	// Full URL
 	const URL = `https://api.waqi.info/feed/${city}/?token=${process.env.AQI_KEY}`;
 
 	return axios
 		.get(URL)
 		.then((result) => {
+			// If we get a valid response
 			if (result.data.status === "ok") {
 				const description = aqi_color(result.data.data.aqi);
 				return {
@@ -24,10 +26,13 @@ const getAQI = (city) => {
                     *${description}*\n\nCity:\t *${city}*\nAir Quality Index:\t *${result.data.data.aqi}*\nPrimary Pollutant:\t *${result.data.data.dominentpol}*\nLocation: *${result.data.data.city.name}*
                     `
 				};
-			} else {
+			} 
+			// If city not found
+			else {
 				return {status: 'fail', markdown: '*[404] City not found*'};
 			}
 		})
+		// Catch any other network error.
 		.catch((err) => {
 			return {status: 'fail', markdown: 'Request failed.'}
 		});

@@ -3,43 +3,69 @@ const axios = require("axios");
 require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_API);
 
+// Import services
 const getDoggo = require("./services/getDoggo.js");
 const getWeather = require('./services/getWeather.js');
 const getAQI = require('./services/getAQI.js');
 const whatIs = require('./services/whatIs.js');
 const ud = require('./services/urban.js');
 
-// START command
+// [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
     ctx.replyWithMarkdown(`
         *Waddup?*\n\nType /help to see all the available commands
     `);
 });
 
-//  Weather Command
+//  [+] WEATHER COMMAND [+] 
 bot.command("weather", async (ctx) => {
-    const city = ctx.message.text.split(" ")[1];
-    const weatherReport = await getWeather(city);
-    ctx.replyWithMarkdown(`${weatherReport.markdown}`)
+    // Make sure if the user typed the city name.
+    if (ctx.message.text.split(' ').length > 1){
+        // Split the context and just get the city typed in.
+        const city = ctx.message.text.split(" ")[1];
+        const weatherReport = await getWeather(city);
+        ctx.replyWithMarkdown(`${weatherReport.markdown}`)
+    } 
+    // If no city given, send usage.
+    else {
+        ctx.reply(`😡 Usage:\n\n/weather city_name`);
+    }
 });
 
-// AQI Index
+// [+] AQI INDEX [+] 
 bot.command("/aqi", async (ctx) => {
-    let city = ctx.message.text.split(" ");
-    city.shift();
-
-    const result = await getAQI(city)
-    ctx.replyWithMarkdown(`${result.markdown}`)
+    // Make sure if the user typed the city name.
+    if (ctx.message.text.length > 4) {
+        // Split the context and just get the city typed in.
+        let city = ctx.message.text.split(" ");
+        const result = await getAQI(city)
+        ctx.replyWithMarkdown(`${result.markdown}`)
+    } else {
+        ctx.reply('😡 Usage:\n\n/aqi city_name');
+    }
 });
 
-// DOGGO image
+// [+] DOGGO IMAGE [+] 
 bot.command("doggo", async (ctx) => {
+
+    // Allowed extensions 
     const images = ["png", "jpg", "jpeg"];
     const video = ["mp4", "gif"];
 
     const doggoUrl = await getDoggo();
+    // Split the URL content 
+    // and just get the extention of the image.
     const extension = doggoUrl.split(".")[2];
 
+    // Check if "extension" is present in "images" or "video" variables
+    // If not, get a new URL
+    while (!(video.includes(extension) || images.includes(extension))) {
+        const doggoUrl = await getDoggo();
+        const extension = doggoUrl.split(".")[2];
+    }
+
+    // Reply with appropriate telegraf method 
+    // according to the allowed extensions.
     switch (extension) {
         case "png":
         case "jpg":
@@ -51,32 +77,34 @@ bot.command("doggo", async (ctx) => {
     }
 });
 
-// DICTIONARY
+// [+] DICTIONARY [+] 
 bot.command("whatis", async (ctx) => {
+    // Split the context and just get the word typed in.
     const word = ctx.message.text.split(" ")[1];
     const result = await whatIs(word);
     ctx.replyWithMarkdown(`${result.markdown}`)
 });
 
-// URBAN-DICTIONARY
+// [+] URBAN-DICTIONARY [+] 
 bot.command('urban', async (ctx) => {
+    // Split the context and just get the query typed in.
     const query = ctx.message.text.split(" ")[1];
     const result = await ud(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
 })
 
-// HELP Command
+// [+] HELP [+] 
 bot.command("help", (ctx) => {
     ctx.reply(`
         /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/whatis - returns definition\n/urban- urban dictionary definition 
     `);
 });
 
-// StartChomtu Function
+// [+] startChomtu Function [+] 
 const startChomtu = () => {
-    const date = new Date()
+    const date = new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
     bot.launch()
-    console.log(`Bot ready \n${date}`);
+    console.log(`Bot ready \n${date} (IST)`);
 }
 
 module.exports = startChomtu;

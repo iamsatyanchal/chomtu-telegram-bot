@@ -2,8 +2,12 @@ const axios = require("axios");
 
 // Make request
 const searchWord = (word) => {
+    // Full URL of the endpoint
     dict_link = `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}`;
 
+    // Grab the data from the end,
+    // put the data in appropriate property of your response object,
+    // return the response object
     return axios
         .get(dict_link, {
             headers: {

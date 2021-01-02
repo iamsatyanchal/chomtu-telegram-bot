@@ -2,15 +2,17 @@ const axios = require("axios");
 require("dotenv").config();
 
 const getWeather = (city) => {
+    // Get weather data of that city and return it.
     return axios
         .get(
             `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.WEATHER_API}&q=${city}`
         )
         .then((res) => {
             const data = res.data;
-            // const temp = Math.ceil(data.main.feels_like - 273.15)
+            // Kelvin to Celsius conversion.
             const temp = (data.main.feels_like - 273.15).toFixed(2);
             const icon = data.weather[0].icon;
+            // Get appropriate Icon URL.
             const icon_url = `http://openweathermap.org/img/wn/${icon}@2x.png`;
             return {
                 status: "success",
