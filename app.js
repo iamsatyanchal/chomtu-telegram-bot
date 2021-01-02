@@ -52,16 +52,16 @@ bot.command("doggo", async (ctx) => {
     const images = ["png", "jpg", "jpeg"];
     const video = ["mp4", "gif"];
 
-    const doggoUrl = await getDoggo();
+    let doggoUrl = await getDoggo();
     // Split the URL content 
     // and just get the extention of the image.
-    const extension = doggoUrl.split(".")[2];
+    let extension = doggoUrl.split(".")[2];
 
     // Check if "extension" is present in "images" or "video" variables
     // If not, get a new URL
     while (!(video.includes(extension) || images.includes(extension))) {
-        const doggoUrl = await getDoggo();
-        const extension = doggoUrl.split(".")[2];
+        doggoUrl = await getDoggo();
+        extension = doggoUrl.split(".")[2];
     }
 
     // Reply with appropriate telegraf method 
