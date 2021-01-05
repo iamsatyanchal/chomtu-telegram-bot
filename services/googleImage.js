@@ -15,7 +15,7 @@ const getRandomResult = () => {
 // Get a new google image and return it
 const googleImage = (search) => {
 	// Full URL
-	const CSE_ENDPOINT = `https://www.googleapis.com/customsearch/v1/siterestrict?key=${process.env.GOOGLE_API_KEY}&cx=${process.env.CSE_ID}&q=${search.join('%20')}&start=${getRandomPage()}&imgSize=large`
+	const CSE_ENDPOINT = `https://www.googleapis.com/customsearch/v1/siterestrict?key=${process.env.GOOGLE_API_KEY}&cx=${process.env.CSE_ID}&q=${search.join('%20')}&start=${getRandomPage()}`
 
 	return axios.get(CSE_ENDPOINT)
 		.then(response => {
