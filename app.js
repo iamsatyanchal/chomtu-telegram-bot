@@ -102,7 +102,7 @@ bot.command('get', async (ctx) => {
 // [+] HELP [+] 
 bot.command("help", (ctx) => {
     ctx.reply(`
-        /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/whatis - returns definition\n/urban- urban dictionary definition 
+        /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/whatis - returns definition\n/urban- urban dictionary definition\n/get- google for an image 
     `);
 });
 
