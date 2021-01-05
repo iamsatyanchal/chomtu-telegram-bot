@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
@@ -9,6 +9,7 @@ const getWeather = require('./services/getWeather.js');
 const getAQI = require('./services/getAQI.js');
 const whatIs = require('./services/whatIs.js');
 const ud = require('./services/urban.js');
+const googleImage = require('./services/googleImage.js')
 
 // [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
@@ -84,6 +85,18 @@ bot.command('urban', async (ctx) => {
     const query = ctx.message.text.split(" ")[1];
     const result = await ud(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
+})
+
+// [+] CUSTOM IMAGE SEARCH [+]
+bot.command('get', async (ctx) => {
+    // Split the context and just get the query typed in.
+    const search = ctx.message.text.split(' ');
+    search.shift();
+    const result = await googleImage(search);
+    
+    // Check for 'success' status in result and 
+    // send reply accordingly
+    const resp = result.status === 'success' ? ctx.replyWithPhoto(result.response) : ctx.reply(result.response);
 })
 
 // [+] HELP [+] 
