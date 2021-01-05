@@ -4,7 +4,7 @@ require('dotenv').config()
 // Generate Random numbers
 const getRandomPage = () => {
 	// random number for a page
-	return Math.ceil(Math.random()*10);
+	return Math.ceil(Math.random()*2);
 }
 
 const getRandomResult = () => {
