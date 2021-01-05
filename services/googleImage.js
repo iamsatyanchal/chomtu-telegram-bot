@@ -4,7 +4,7 @@ require('dotenv').config()
 // Generate Random numbers
 const getRandomPage = () => {
 	// random number for a page
-	return Math.floor(Math.random()*2);
+	return Math.ceil(Math.random()*2);
 }
 
 const getRandomResult = () => {
@@ -15,7 +15,7 @@ const getRandomResult = () => {
 // Get a new google image and return it
 const googleImage = (search) => {
 	// Full URL
-	const CSE_ENDPOINT = `https://www.googleapis.com/customsearch/v1?key=${process.env.GOOGLE_API_KEY}&cx=${process.env.CSE_ID}&q=${search.join('%20')}&start=${getRandomPage()}`
+	const CSE_ENDPOINT = `https://www.googleapis.com/customsearch/v1/siterestrict?key=${process.env.GOOGLE_API_KEY}&cx=${process.env.CSE_ID}&q=${search.join('%20')}&start=${getRandomPage()}&imgSize=large`
 
 	return axios.get(CSE_ENDPOINT)
 		.then(response => {

@@ -97,7 +97,6 @@ bot.command('get', async (ctx) => {
     // Check for 'success' status in result and 
     // send reply accordingly
     const resp = result.status === 'success' ? ctx.replyWithPhoto(result.response) : ctx.reply(result.response);
-    console.log(result)
 })
 
 // [+] HELP [+] 
