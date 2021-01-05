@@ -9,7 +9,8 @@ const getWeather = require('./services/getWeather.js');
 const getAQI = require('./services/getAQI.js');
 const whatIs = require('./services/whatIs.js');
 const ud = require('./services/urban.js');
-const googleImage = require('./services/googleImage.js')
+const googleImage = require('./services/googleImage.js');
+const getCat = require('./services/getCat.js');
 
 // [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
@@ -70,6 +71,18 @@ bot.command("doggo", async (ctx) => {
             ctx.replyWithVideo(doggoUrl);
     }
 });
+
+// [+] RANDOM CAT [+]
+bot.command('cat', async (ctx) => {
+    const catLink = await getCat();
+    
+    // If the links a gif, use video method
+    if(catLink.includes('gif')) {
+        ctx.replyWithVideo(catLink)
+    }
+    // reply with a photo
+    ctx.replyWithPhoto(catLink);
+})
 
 // [+] DICTIONARY [+] 
 bot.command("whatis", async (ctx) => {
