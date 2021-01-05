@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
@@ -97,6 +97,7 @@ bot.command('get', async (ctx) => {
     // Check for 'success' status in result and 
     // send reply accordingly
     const resp = result.status === 'success' ? ctx.replyWithPhoto(result.response) : ctx.reply(result.response);
+    console.log(result)
 })
 
 // [+] HELP [+] 
