@@ -78,7 +78,7 @@ bot.command('cat', async (ctx) => {
     
     // If the links a gif, use video method
     if(catLink.includes('gif')) {
-        ctx.replyWithVideo(catLink)
+        return ctx.replyWithVideo(catLink)
     }
     // reply with a photo
     ctx.replyWithPhoto(catLink);
