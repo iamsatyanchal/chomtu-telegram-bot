@@ -57,7 +57,7 @@ bot.command("doggo", async (ctx) => {
     let doggoUrl = await getDoggo();
     // Split the URL content 
     // and just get the extention of the image.
-    let extension = doggoUrl.split(".")[2];
+    let extension = doggoUrl.split(".")[2].toLowerCase();
 
     // Reply with appropriate telegraf method 
     // according to the allowed extensions.
