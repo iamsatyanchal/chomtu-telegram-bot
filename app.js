@@ -11,6 +11,7 @@ const whatIs = require('./services/whatIs.js');
 const ud = require('./services/urban.js');
 const googleImage = require('./services/googleImage.js');
 const getCat = require('./services/getCat.js');
+const covid = require('./services/covid.js');
 
 // [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
@@ -112,11 +113,33 @@ bot.command('get', async (ctx) => {
     const resp = result.status === 'success' ? ctx.replyWithPhoto(result.response) : ctx.reply(result.response);
 })
 
+// [+] COVID INFO [+]
+bot.command('covid', async (ctx) => {
+    const country = ctx.message.text.split(' ');
+    country.shift();
+
+    // Check if country name is given.
+    if (!country.length > 0) {
+        // if no country then send usage.
+        return ctx.reply('Usage: /covid country_name')
+    } 
+    const result = await covid(country.join("-"));
+    return ctx.replyWithMarkdown(result.markdown);
+})
+
 // [+] HELP [+] 
 bot.command("help", (ctx) => {
-    ctx.reply(`
-        /help - this command\n/weather - gets you the weather\n/aqi - air quality index\n/doggo - get random dogs\n/cat- random cat\n/whatis - returns definition\n/urban- urban dictionary definition\n/get- google for an image 
-    `);
+    ctx.reply(
+        `/help - this command\n` +
+        `/weather - gets you the weather\n` + 
+        `/aqi - air quality index\n` + 
+        `/doggo - get random dogs\n` + 
+        `/cat- random cat\n` +
+        `/whatis - returns definition\n` +
+        `/urban- urban dictionary definition\n` + 
+        `/get- google for an image\n` +
+        `/covid- get covid data`
+    );
 });
 
 // [+] startChomtu Function [+] 
