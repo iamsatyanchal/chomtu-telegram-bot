@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
@@ -89,8 +89,31 @@ bot.command('cat', async (ctx) => {
 bot.command("whatis", async (ctx) => {
     // Split the context and just get the word typed in.
     const word = ctx.message.text.split(" ")[1];
+    if (!word) {
+        return ctx.reply('Usage: /whatis <query>')
+    }
+    // call whatIs service and get the result.
     const result = await whatIs(word);
-    ctx.replyWithMarkdown(`${result.markdown}`)
+    
+    // If no word found, send error
+    if (result.status === 'fail') {
+        return ctx.reply(result.markdown);
+    }
+
+    // If everything goess well then send markdown and audio, if any.
+    ctx.replyWithMarkdown(
+        `📕 Oxford Dictionary\n\n` +
+       `*Word*:\t ${result.word}\n\n` + 
+       `*Definition*:\t ${result.definition}\n\n` + 
+       `*Short-Definition*:\t ${result.shortDefinitions}`
+    )
+    // If audio is present then send audio.
+    if (!result.audio) {
+        return null;
+    } else {
+        await ctx.replyWithAudio(result.audioLink);
+    }
+     
 });
 
 // [+] URBAN-DICTIONARY [+] 
@@ -135,7 +158,7 @@ bot.command("help", (ctx) => {
         `/aqi - air quality index\n` + 
         `/doggo - get random dogs\n` + 
         `/cat- random cat\n` +
-        `/whatis - returns definition\n` +
+        `/whatis - definition from dictionary\n` +
         `/urban- urban dictionary definition\n` + 
         `/get- google for an image\n` +
         `/covid- get covid data`

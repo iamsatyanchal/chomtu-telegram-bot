@@ -16,12 +16,22 @@ const searchWord = (word) => {
             },
         })
         .then((response) => {
-            return {
+            const responseObject = {
                 status: "success",
                 word: word,
                 definition: response.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0],
                 shortDefinitions: response.data.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions[0],
-            };
+                audio: false
+            }
+
+            // If audio found in the response then append audio link.
+            try {
+                responseObject.audioLink = response.data.results[0].lexicalEntries[1].entries[0].pronunciations[1].audioFile;
+                responseObject.audio = true;
+            } finally {
+                return responseObject;
+            }
+            
         })
         .catch((err) => {
             return { status: "fail", err: err };
@@ -29,14 +39,13 @@ const searchWord = (word) => {
 };
 
 const whatIs = async (word) => {
+    // Calls the searchWord function and pass the word toit
     const result = await searchWord(word);
-
+    
     if (result.status !== "success") {
-        return { markdown: "no word found" };
+        return { status: "fail", markdown: "No word found" };
     }
-    return {
-       markdown: `📕 Oxford Dictionary\n\n*Word*:\t ${result.word}\n\n*Definition*:\t ${result.definition}\n\n*Short-Definition*:\t ${result.shortDefinitions}`
-    };
+    return result;
 };
 
 module.exports = whatIs;
