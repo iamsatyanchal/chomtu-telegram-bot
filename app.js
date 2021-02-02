@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BRAD_API);
+const bot = new Telegraf(process.env.BOT_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
