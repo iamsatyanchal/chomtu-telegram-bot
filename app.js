@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
@@ -38,14 +38,17 @@ bot.command("weather", async (ctx) => {
 // [+] AQI INDEX [+] 
 bot.command("/aqi", async (ctx) => {
     // Make sure if the user typed the city name.
-    if (ctx.message.text.length > 4) {
-        // Split the context and just get the city typed in.
-        let city = ctx.message.text.split(" ");
-        const result = await getAQI(city)
-        ctx.replyWithMarkdown(`${result.markdown}`)
-    } else {
-        ctx.reply('😡 Usage:\n\n/aqi city_name');
-    }
+    const city = ctx.message.text.split(' ');
+    city.shift();
+
+    // Check if country name is given.
+    if (!city.length > 0) {
+        // if no country then send usage.
+        return ctx.reply('Usage: /aqi city_name')
+    } 
+
+    const result = await getAQI(city.join('-'))
+    ctx.replyWithMarkdown(`${result.markdown}`)
 });
 
 // [+] DOGGO IMAGE [+] 
