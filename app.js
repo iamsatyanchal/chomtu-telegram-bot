@@ -12,6 +12,7 @@ const ud = require('./services/urban.js');
 const googleImage = require('./services/googleImage.js');
 const getCat = require('./services/getCat.js');
 const covid = require('./services/covid.js');
+const wiki = require('./services/wiki.js');
 
 // [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
@@ -153,6 +154,15 @@ bot.command('covid', async (ctx) => {
     return ctx.replyWithMarkdown(result.markdown);
 })
 
+// [+] WIKIPEDIA [+]
+bot.command('wiki', async (ctx) => {
+    const query = ctx.message.text.split(' ');
+    query.shift();
+
+    const result = await wiki(query);
+    ctx.replyWithMarkdown(result.markdown);
+})
+
 // [+] HELP [+] 
 bot.command("help", (ctx) => {
     ctx.reply(
@@ -164,7 +174,8 @@ bot.command("help", (ctx) => {
         `/whatis - definition from dictionary\n` +
         `/urban- urban dictionary definition\n` + 
         `/get- google for an image\n` +
-        `/covid- get covid data`
+        `/covid- get covid data\n` + 
+        `/wiki- Info from Wikipedia`
     );
 });
 
