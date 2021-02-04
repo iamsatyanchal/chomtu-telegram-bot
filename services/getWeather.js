@@ -16,9 +16,11 @@ const getWeather = (city) => {
             const icon_url = `http://openweathermap.org/img/wn/${icon}@2x.png`;
             return {
                 status: "success",
-                markdown: `
-            *🌞 ${data.name}'s Weather Forecast*\n\n*City:* ${data.name} (${data.sys.country})\n*Weather:* ${data.weather[0].main}\n\n*🌡  Temperature:\t* ${temp}°C  \n*🎏  Pressure:* ${data.main.pressure}hpa \n*💧  Humidity:* ${data.main.humidity}%  \n\n[Icon](${icon_url})
-            `,
+                markdown: `*🌞 ${data.name}'s Weather Forecast*\n\n` + 
+                            `*City:* ${data.name} (${data.sys.country})\n` + 
+                            `*Weather:* ${data.weather[0].main}\n\n*🌡  Temperature:\t* ${temp}°C  \n` +
+                            `*🎏  Pressure:* ${data.main.pressure}hpa \n` + 
+                            `*💧  Humidity:* ${data.main.humidity}%  \n\n[Icon](${icon_url})`
             };
         })
         .catch((err) => {

@@ -6,7 +6,10 @@ const ud = (query) => {
 		.then(result => {
 			const resp = {
 				status: 'success',
-				markdown: `🔰 Urban Dictionary\n\n\*Word:*\t ${query}\n\n*Definition:*\n${result[0].definition}\n\n*Example[s]:*\n${result[0].example}`
+				markdown: `🔰 Urban Dictionary\n\n` + 
+							`*Word:*\t ${query}\n\n` + 
+							`*Definition:*\n${result[0].definition}\n\n` + 
+							`*Example[s]:*\n${result[0].example}`
 			}
 			return resp;
 		})

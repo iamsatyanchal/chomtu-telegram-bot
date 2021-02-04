@@ -22,9 +22,11 @@ const getAQI = (city) => {
 				const description = aqi_color(result.data.data.aqi);
 				return {
 					status: 'success',
-					markdown: `
-                    *${description}*\n\nCity:\t *${city}*\nAir Quality Index:\t *${result.data.data.aqi}*\nPrimary Pollutant:\t *${result.data.data.dominentpol}*\nLocation: *${result.data.data.city.name}*
-                    `
+					markdown: `*${description}*\n\n` + 
+								`City:\t *${city}*\n` + 
+								`Air Quality Index:\t *${result.data.data.aqi}*\n` + 
+								`Primary Pollutant:\t *${result.data.data.dominentpol}*\n` + 
+								`Location: *${result.data.data.city.name}*`
 				};
 			} 
 			// If city not found

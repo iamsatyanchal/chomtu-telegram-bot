@@ -45,7 +45,7 @@ bot.command("/aqi", async (ctx) => {
     // Check if country name is given.
     if (!city.length > 0) {
         // if no country then send usage.
-        return ctx.reply('Usage: /aqi city_name')
+        return ctx.reply('🙅‍♂️ *Usage*\n/aqi city_name')
     } 
 
     const result = await getAQI(city.join('-'))
@@ -159,6 +159,12 @@ bot.command('wiki', async (ctx) => {
     const query = ctx.message.text.split(' ');
     query.shift();
 
+    // Check if country name is given.
+    if (!query.length > 0) {
+        // if no country then send usage.
+        return ctx.reply('Usage: /wiki your_query');
+    } 
+
     const result = await wiki(query);
     ctx.replyWithMarkdown(result.markdown);
 })
@@ -166,16 +172,15 @@ bot.command('wiki', async (ctx) => {
 // [+] HELP [+] 
 bot.command("help", (ctx) => {
     ctx.reply(
-        `/help - this command\n` +
-        `/weather - gets you the weather\n` + 
+        `/weather - weather information\n` + 
         `/aqi - air quality index\n` + 
         `/doggo - get random dogs\n` + 
         `/cat- random cat\n` +
-        `/whatis - definition from dictionary\n` +
+        `/whatis - returns the meaning\n` +
         `/urban- urban dictionary definition\n` + 
-        `/get- google for an image\n` +
+        `/get- search google for an image\n` +
         `/covid- get covid data\n` + 
-        `/wiki- Info from Wikipedia`
+        `/wiki- wikipedia`
     );
 });
 
