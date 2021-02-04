@@ -54,11 +54,6 @@ bot.command("/aqi", async (ctx) => {
 
 // [+] DOGGO IMAGE [+] 
 bot.command("doggo", async (ctx) => {
-
-    // Allowed extensions 
-    const images = ["png", "jpg", "jpeg"];
-    const video = ["mp4", "gif"];
-
     let doggoUrl = await getDoggo();
     // Split the URL content 
     // and just get the extention of the image.
