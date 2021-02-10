@@ -196,7 +196,8 @@ bot.command("help", (ctx) => {
         `/urban- urban dictionary definition\n` + 
         `/get- search google for an image\n` +
         `/covid- get covid data\n` + 
-        `/wiki- wikipedia`
+        `/wiki- wikipedia` + 
+        `/lyrics- get lyrics of song(ENGLISH)`
     );
 });
 
