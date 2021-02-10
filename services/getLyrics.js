@@ -32,7 +32,7 @@ const getLyrics = async (songName) => {
 			songName: song,
 			artist,
 			lyrics,
-			cover: coverArray[2]
+			cover: coverArray[4]
 		}
 
 	}).catch((err) => {
