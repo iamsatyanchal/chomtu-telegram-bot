@@ -13,6 +13,7 @@ const googleImage = require('./services/googleImage.js');
 const getCat = require('./services/getCat.js');
 const covid = require('./services/covid.js');
 const wiki = require('./services/wiki.js');
+const getLyrics = require('./services/getLyrics.js')
 
 // [+] START COMMAND [+] 
 bot.command("start", (ctx) => {
@@ -162,6 +163,26 @@ bot.command('wiki', async (ctx) => {
 
     const result = await wiki(query);
     ctx.replyWithMarkdown(result.markdown);
+})
+
+// [+] LYREKA FOR LYRICS [+]
+bot.command('lyrics', async (ctx) => {
+    const songName = ctx.message.text.split(' ');
+    songName.shift();
+
+    const resultObj = await getLyrics(songName);
+    // console.log(resultObj);
+    if (resultObj.status === 'success') {
+        // console.log(resultObj)
+        ctx.replyWithMarkdown(`
+            *🎶 Song Name:* ${resultObj.songName}\n` +
+            `*Artist: ${resultObj.artist}*\n` +
+            `*Lyrics*:\n${resultObj.lyrics}\n`+ 
+            `[Cover](${resultObj.cover})`
+        )
+    } else {
+        ctx.replyWithMarkdown(`${resultObj.message}`);
+    }
 })
 
 // [+] HELP [+] 
