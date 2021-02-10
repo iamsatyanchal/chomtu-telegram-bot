@@ -26,17 +26,18 @@ const getLyrics = async (songName) => {
 		// Grab the cover pic (128w) of that song.
 		const cover = result(".track-cover-container img").attr("data-srcset");
 		const coverArray = cover.split(" "); // Convert the datasrc's to an array
-		
 		return {
 			status: 'success',
 			songName: song,
 			artist,
 			lyrics,
-			cover: coverArray[4]
+			cover: coverArray[4],
+			url: baseURL
 		}
 
 	}).catch((err) => {
 		// console.log(err);
+		console.log(err.message)
 		return {
 			status: 'fail',
 			message: '🥴 Song not found'
