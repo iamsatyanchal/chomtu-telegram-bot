@@ -1,3 +1,5 @@
+// Thanks to Lyreka: https://www.lyreka.com 
+
 const axios = require("axios");
 const cheerio = require("cheerio");
 

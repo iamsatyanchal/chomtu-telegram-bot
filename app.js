@@ -176,7 +176,7 @@ bot.command('lyrics', async (ctx) => {
         // console.log(resultObj)
         ctx.replyWithMarkdown(`
             *🎶 Song Name:* ${resultObj.songName}\n` +
-            `*Artist: ${resultObj.artist}*\n` +
+            `*Artist:* ${resultObj.artist}\n\n` +
             `*Lyrics*:\n${resultObj.lyrics}\n`+ 
             `[Cover](${resultObj.cover})`
         )
@@ -196,8 +196,8 @@ bot.command("help", (ctx) => {
         `/urban- urban dictionary definition\n` + 
         `/get- search google for an image\n` +
         `/covid- get covid data\n` + 
-        `/wiki- wikipedia` + 
-        `/lyrics- get lyrics of song(ENGLISH)`
+        `/wiki- wikipedia\n` + 
+        `/lyrics- get lyrics of song(ENGLISH)\n`
     );
 });
 
