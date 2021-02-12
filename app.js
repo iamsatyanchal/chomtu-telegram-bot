@@ -22,6 +22,16 @@ bot.command("start", (ctx) => {
     `);
 });
 
+// [+] STICKER [+]
+bot.on('sticker', (ctx) => {
+    console.log(ctx.message.sticker.set_name);
+
+    // AUTO DELETE THE STICKER
+    if (ctx.message.sticker.set_name === 'totottbokep') {
+        ctx.deleteMessage(ctx.message.message_id);
+    }
+})
+
 //  [+] WEATHER COMMAND [+]
 bot.command("weather", async (ctx) => {
     // Make sure if the user typed the city name.
@@ -174,7 +184,6 @@ bot.command("lyrics", async (ctx) => {
 
     const resultObj = await getLyrics(songName);
     // console.log(resultObj);
-    console.log(resultObj.status);
     if (resultObj.status === 'success') {
         // console.log(resultObj)
        try {
