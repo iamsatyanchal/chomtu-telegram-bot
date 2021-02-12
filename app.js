@@ -1,4 +1,5 @@
 const { Telegraf } = require("telegraf");
+const { MenuTemplate, MenuMiddleware } = require('telegraf-inline-menu');
 const axios = require("axios");
 require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_API);
@@ -24,7 +25,7 @@ bot.command("start", (ctx) => {
 
 // [+] STICKER [+]
 bot.on('sticker', (ctx) => {
-    console.log(ctx.message.sticker.set_name);
+    //console.log(ctx.message.sticker.set_name);
 
     // AUTO DELETE THE STICKER
     if (ctx.message.sticker.set_name === 'totottbokep') {
@@ -34,6 +35,9 @@ bot.on('sticker', (ctx) => {
 
 //  [+] WEATHER COMMAND [+]
 bot.command("weather", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     // Make sure if the user typed the city name.
     if (ctx.message.text.split(" ").length > 1) {
         // Split the context and just get the city typed in.
@@ -49,6 +53,9 @@ bot.command("weather", async (ctx) => {
 
 // [+] AQI INDEX [+]
 bot.command("/aqi", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     // Make sure if the user typed the city name.
     const city = ctx.message.text.split(" ");
     city.shift();
@@ -65,6 +72,9 @@ bot.command("/aqi", async (ctx) => {
 
 // [+] DOGGO IMAGE [+]
 bot.command("doggo", async (ctx) => {
+    // send photo...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
+
     let doggoUrl = await getDoggo();
     // Split the URL content
     // and just get the extention of the image.
@@ -85,6 +95,9 @@ bot.command("doggo", async (ctx) => {
 
 // [+] RANDOM CAT [+]
 bot.command("cat", async (ctx) => {
+    // send photo...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
+
     const catLink = await getCat();
 
     // If the links a gif, use video method
@@ -97,6 +110,9 @@ bot.command("cat", async (ctx) => {
 
 // [+] DICTIONARY [+]
 bot.command("whatis", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     // Split the context and just get the word typed in.
     const word = ctx.message.text.split(" ")[1];
     if (!word) {
@@ -127,6 +143,9 @@ bot.command("whatis", async (ctx) => {
 
 // [+] URBAN-DICTIONARY [+]
 bot.command("urban", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     // Split the context and just get the query typed in.
     const query = ctx.message.text.split(" ")[1];
     const result = await ud(query);
@@ -135,6 +154,9 @@ bot.command("urban", async (ctx) => {
 
 // [+] CUSTOM IMAGE SEARCH [+]
 bot.command("get", async (ctx) => {
+    // sending photo...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
+
     // Split the context and just get the query typed in.
     const search = ctx.message.text.split(" ");
     search.shift();
@@ -150,6 +172,9 @@ bot.command("get", async (ctx) => {
 
 // [+] COVID INFO [+]
 bot.command("covid", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     const country = ctx.message.text.split(" ");
     country.shift();
 
@@ -164,6 +189,9 @@ bot.command("covid", async (ctx) => {
 
 // [+] WIKIPEDIA [+]
 bot.command("wiki", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+
     const query = ctx.message.text.split(" ");
     query.shift();
 
@@ -179,6 +207,8 @@ bot.command("wiki", async (ctx) => {
 
 // [+] LYREKA FOR LYRICS [+]
 bot.command("lyrics", async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
     const songName = ctx.message.text.split(" ");
     songName.shift();
 
@@ -196,7 +226,7 @@ bot.command("lyrics", async (ctx) => {
        } catch {
             // console.log(e.message);
             await ctx.replyWithMarkdown(`😳 Song is too long, read the lyrics [here](${resultObj.url})\n`);
-       }
+        }
 
      } else {
         ctx.replyWithMarkdown(`${resultObj.message}`);
@@ -219,6 +249,21 @@ bot.command("help", (ctx) => {
             `/lyrics- get lyrics of song(ENGLISH)\n`
     );
 });
+
+// {+} TESTING INLINE-MENU {+}
+// const menuTemplate = new MenuTemplate(ctx => `Hey ${ctx.from.first_name}`);
+// menuTemplate.interact('I am excited!', 'a', {
+//     hide: () => mainMenuToggle,
+//     do: async ctx => {
+//         await ctx.reply('As am I!');
+
+//         // Do not update the menu afterwards
+//         return false;
+//     }
+// })
+// const menuMiddleware = new MenuMiddleware('/', menuTemplate)
+// bot.command('sex', ctx => menuMiddleware.replyToContext(ctx));
+// bot.use(menuMiddleware.middleware());
 
 // [+] startChomtu Function [+]
 const startChomtu = () => {
