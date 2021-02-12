@@ -15,7 +15,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "telegraf": "^4.0.3",
-    "telegraf-inline-menu": "^6.1.0",
     "urban-dictionary": "^3.0.0"
   }
 }

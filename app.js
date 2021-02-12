@@ -1,5 +1,4 @@
 const { Telegraf } = require("telegraf");
-const { MenuTemplate, MenuMiddleware } = require('telegraf-inline-menu');
 const axios = require("axios");
 require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_API);
