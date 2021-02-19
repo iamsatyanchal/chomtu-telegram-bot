@@ -146,7 +146,8 @@ bot.command("urban", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
     // Split the context and just get the query typed in.
-    const query = ctx.message.text.split(" ")[1];
+    const query = ctx.message.text.split(" ");
+    query.shift();
     const result = await ud(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
 });
@@ -248,6 +249,10 @@ bot.command("help", (ctx) => {
             `/lyrics- get lyrics of song(ENGLISH)\n`
     );
 });
+
+bot.command('/test', ctx => {
+    console.log(ctx.chat);
+})
 
 // {+} TESTING INLINE-MENU {+}
 // const menuTemplate = new MenuTemplate(ctx => `Hey ${ctx.from.first_name}`);
