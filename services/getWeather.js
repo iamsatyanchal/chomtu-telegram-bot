@@ -1,35 +1,58 @@
 const axios = require("axios");
+const cheerio = require('cheerio');
 require("dotenv").config();
 
-const getWeather = (city) => {
-    // Get weather data of that city and return it.
-    return axios
-        .get(
-            `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.WEATHER_API}&q=${city}`
-        )
-        .then((res) => {
-            const data = res.data;
-            // Kelvin to Celsius conversion.
-            const temp = (data.main.feels_like - 273.15).toFixed(2);
-            const icon = data.weather[0].icon;
-            // Get appropriate Icon URL.
-            const icon_url = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-            return {
-                status: "success",
-                markdown: `*🌞 ${data.name}'s Weather Forecast*\n\n` + 
-                            `*City:* ${data.name} (${data.sys.country})\n` + 
-                            `*Weather:* ${data.weather[0].main}\n\n*🌡  Temperature:\t* ${temp}°C  \n` +
-                            `*🎏  Pressure:* ${data.main.pressure}hpa \n` + 
-                            `*💧  Humidity:* ${data.main.humidity}%  \n\n[Icon](${icon_url})`
-            };
-        })
-        .catch((err) => {
-            if (err.response.data.cod == 404) {
-                return { status: "fail", markdown: "*[404]* City not found" };
-            } else {
-                console.log(err);
-            }
-        });
-};
+// fetch html of a page
+const fetchHTML = async (url) => {  
+    const { data } = await axios.get(url);
+    return cheerio.load(data);
+}
 
-module.exports = getWeather;
+// [+] Scrape Weather.com [+]
+const scrapeWeather = async (cityName) => {
+    try {
+        const cityCords = await getCityCords(cityName.join('%20'));
+        const baseURL = `https://weather.com/en-IN/weather/today/${cityCords}?par=google&temp=c`;
+
+        // Fetch HTML
+        const data = fetchHTML(baseURL);
+
+        return data.then(result => {
+            // Grab city, temp, aqi, weather from them HTML
+            const city = result('.CurrentConditions--location--1Ayv3').text();
+            const temp = result('.TodayDetailsCard--feelsLikeTempValue--2aogo').text();
+            const aqi = result('text[data-testid="DonutChartValue"]').text();
+            const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
+            // city, temp, currentWeather, aqi
+            return { 
+                status: 'success', 
+                markdown: `*${city}*\n\n` + 
+                            `🌡 *Temperature:* ${temp}\n` +  
+                            `🌥 *Weather:* ${currentWeather}\n` + 
+                            `🌬 *Air Quality:* ${aqi}\n`
+            };
+
+        }).catch(err => { 
+            return {
+                status: 'fail', 
+                message: 'City not found'
+            }
+        }); 
+    } catch (e) {
+        return {
+            status: 'fail',
+            message: 'Network Error'
+        }
+    }
+}
+
+const getCityCords = (cityName) => {
+    return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${process.env.MAPBOX_KEY}`).then(result => {
+        const cords = result.data.features[0].geometry.coordinates.reverse();
+        const newCord = [...cords.map(cord => cord.toFixed(2))];
+        // console.log(newCord.join())
+        return newCord.join();
+    }).catch(err => console.log('Network error'));
+}
+
+module.exports = scrapeWeather;

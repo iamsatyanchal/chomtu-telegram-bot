@@ -37,17 +37,26 @@ bot.command("weather", async (ctx) => {
     // typing...
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
-    // Make sure if the user typed the city name.
-    if (ctx.message.text.split(" ").length > 1) {
-        // Split the context and just get the city typed in.
-        const city = ctx.message.text.split(" ")[1];
-        const weatherReport = await getWeather(city);
-        ctx.replyWithMarkdown(`${weatherReport.markdown}`);
+    // Split the context and just get the query typed in.
+    const cityName = ctx.message.text.split(" ");
+    cityName.shift();
+
+    const data = await getWeather(cityName);
+
+    // check for arguments
+    if (!cityName.length > 0) {
+        ctx.reply('Usage: /weather <city_name>')
+    } else {
+        // Make sure if the user typed the city name.
+        if (data.status === 'success') {
+            await ctx.replyWithMarkdown(data.markdown);
+        }
+        // If no city given, send usage.
+        else {
+            await ctx.reply(data.message);
+        }
     }
-    // If no city given, send usage.
-    else {
-        ctx.reply(`😡 Usage:\n\n/weather city_name`);
-    }
+
 });
 
 // [+] AQI INDEX [+]
