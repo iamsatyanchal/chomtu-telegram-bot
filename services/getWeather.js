@@ -25,7 +25,8 @@ const scrapeWeather = async (cityName) => {
             const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
             // city, temp, currentWeather, aqi
             return { 
-                status: 'success', 
+                status: 'success',
+                url: baseURL, 
                 markdown: `*${city}*\n\n` + 
                             `🌡 *Temperature:* ${temp}\n` +  
                             `🌥 *Weather:* ${currentWeather}\n` + 

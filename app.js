@@ -49,7 +49,15 @@ bot.command("weather", async (ctx) => {
     } else {
         // Make sure if the user typed the city name.
         if (data.status === 'success') {
-            await ctx.replyWithMarkdown(data.markdown);
+            // await ctx.replyWithMarkdown(data.markdown);
+            ctx.telegram.sendMessage(ctx.chat.id, data.markdown, {
+                parse_mode: 'MarkdownV2',
+                reply_markup: {
+                    inline_keyboard:[
+                        [{text: 'Open on weather.com', url: data.url}]
+                    ]
+                }
+            })
         }
         // If no city given, send usage.
         else {
@@ -259,24 +267,10 @@ bot.command("help", (ctx) => {
     );
 });
 
-bot.command('/test', ctx => {
-    console.log(ctx.chat);
-})
-
-// {+} TESTING INLINE-MENU {+}
-// const menuTemplate = new MenuTemplate(ctx => `Hey ${ctx.from.first_name}`);
-// menuTemplate.interact('I am excited!', 'a', {
-//     hide: () => mainMenuToggle,
-//     do: async ctx => {
-//         await ctx.reply('As am I!');
-
-//         // Do not update the menu afterwards
-//         return false;
-//     }
+// bot.command('/test', ctx => {
+//     console.log(ctx.chat);
 // })
-// const menuMiddleware = new MenuMiddleware('/', menuTemplate)
-// bot.command('sex', ctx => menuMiddleware.replyToContext(ctx));
-// bot.use(menuMiddleware.middleware());
+
 
 // [+] startChomtu Function [+]
 const startChomtu = () => {
