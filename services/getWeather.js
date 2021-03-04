@@ -12,7 +12,7 @@ const fetchHTML = async (url) => {
 const scrapeWeather = async (cityName) => {
     try {
         const cityCords = await getCityCords(cityName.join('%20'));
-        const baseURL = `https://weather.com/en-IN/weather/today/${cityCords}?par=google&temp=c`;
+        const baseURL = `https://weather.com/en-IN/weather/today/${cityCords}?&temp=c`;
 
         // Fetch HTML
         const data = fetchHTML(baseURL);
@@ -23,6 +23,7 @@ const scrapeWeather = async (cityName) => {
             const temp = result('.TodayDetailsCard--feelsLikeTempValue--2aogo').text();
             const aqi = result('text[data-testid="DonutChartValue"]').text();
             const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
+            const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text();
             // city, temp, currentWeather, aqi
             return { 
                 status: 'success',
@@ -30,7 +31,8 @@ const scrapeWeather = async (cityName) => {
                 markdown: `*${city}*\n\n` + 
                             `🌡 *Temperature:* ${temp}\n` +  
                             `🌥 *Weather:* ${currentWeather}\n` + 
-                            `🌬 *Air Quality:* ${aqi}\n`
+                            `🌬 *Air Quality:* ${aqi}\n\n` + 
+                            `*Last Update:* ${lastUpdated}`
             };
 
         }).catch(err => { 
