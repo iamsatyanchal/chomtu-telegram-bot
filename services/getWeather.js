@@ -28,11 +28,11 @@ const scrapeWeather = async (cityName) => {
             return { 
                 status: 'success',
                 url: baseURL, 
-                markdown: `*${city}*\n\n` + 
-                            `🌡 *Temperature:* ${temp}\n` +  
-                            `🌥 *Weather:* ${currentWeather}\n` + 
-                            `🌬 *Air Quality:* ${aqi}\n\n` + 
-                            `*Last Update:* ${lastUpdated}`
+                markdown: `<b>${city}</b>\n\n` + 
+                            `🌡 <b>Temperature:</b> ${temp}\n` +  
+                            `🌥 <b>Weather:</b> ${currentWeather}\n` + 
+                            `🌬 <b>Air Quality:</b> ${aqi}\n\n` + 
+                            `<b>Last Update:</b> ${lastUpdated}`
             };
 
         }).catch(err => { 

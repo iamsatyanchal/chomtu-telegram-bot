@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getDoggo = require("./services/getDoggo.js");
@@ -51,7 +51,7 @@ bot.command("weather", async (ctx) => {
         if (data.status === 'success') {
             // await ctx.replyWithMarkdown(data.markdown);
             ctx.telegram.sendMessage(ctx.chat.id, data.markdown, {
-                parse_mode: 'MarkdownV2',
+                parse_mode: 'HTML',
                 reply_markup: {
                     inline_keyboard:[
                         [{text: 'Open on weather.com', url: data.url}]
