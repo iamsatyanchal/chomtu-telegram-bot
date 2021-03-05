@@ -1,12 +1,17 @@
 const axios = require("axios");
-const cheerio = require('cheerio');
+const fetchHTML = require('./fetchHTML.js');
 require("dotenv").config();
 
-// fetch html of a page
-const fetchHTML = async (url) => {  
-    const { data } = await axios.get(url);
-    return cheerio.load(data);
-}
+const getAQIRemark = (aqi) => {
+    let remark;
+
+    if (aqi < 50) {remark = 'Good'}
+    else if (aqi >50 && aqi <= 100) {remark = 'satisfactory'}
+    else if (aqi > 100 && aqi < 200) {remark = 'moderate'}
+    else {remark = 'poor'};
+
+    return remark;
+}   
 
 // [+] Scrape Weather.com [+]
 const scrapeWeather = async (cityName) => {
@@ -31,7 +36,7 @@ const scrapeWeather = async (cityName) => {
                 markdown: `<b>${city}</b>\n\n` + 
                             `🌡 <b>Temperature:</b> ${temp}\n` +  
                             `🌥 <b>Weather:</b> ${currentWeather}\n` + 
-                            `🌬 <b>Air Quality:</b> ${aqi}\n\n` + 
+                            `🌬 <b>Air Quality:</b> ${aqi} (${getAQIRemark(aqi)})\n\n` + 
                             `<b>Last Update:</b> ${lastUpdated}`
             };
 

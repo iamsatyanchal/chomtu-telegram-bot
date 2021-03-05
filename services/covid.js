@@ -1,10 +1,5 @@
 const axios = require("axios");
-const cheerio = require("cheerio");
-
-const fetchHTML = async (url) => {
-	const { data } = await axios.get(url);
-	return cheerio.load(data);
-};
+const fetchHTML = require('./fetchHTML.js');
 
 const getCovidData = async (country) => {
 	baseURL = `https://www.worldometers.info/coronavirus/country/${country}`;

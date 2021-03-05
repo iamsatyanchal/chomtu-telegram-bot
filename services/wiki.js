@@ -1,11 +1,5 @@
-const cheerio = require('cheerio');
 const axios = require('axios');
-
-// fetch html of a page
-const fetchHTML = async (url) => {	
-	const { data } = await axios.get(url);
-	return cheerio.load(data);
-}
+const fetchHTML = require('./fetchHTML.js');
 
 // Get relevant data from fetchHTML for wikipedia 
 const scrapeWiki = async (query) => {

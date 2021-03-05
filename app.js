@@ -1,19 +1,25 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BRAD_API);
+const bot = new Telegraf(process.env.BOT_API);
 
 // Import services
-const getDoggo = require("./services/getDoggo.js");
 const getWeather = require("./services/getWeather.js");
-const getAQI = require("./services/getAQI.js");
 const whatIs = require("./services/whatIs.js");
 const ud = require("./services/urban.js");
 const googleImage = require("./services/googleImage.js");
-const getCat = require("./services/getCat.js");
 const covid = require("./services/covid.js");
 const wiki = require("./services/wiki.js");
 const getLyrics = require("./services/getLyrics.js");
+const { getDoggo, getCat } = require("./services/getRandomAnimals.js")
+
+//  [+] FUNCTION [+]
+const getUserMessage = (ctx) => {
+    const message = ctx.message.text.split(" ");
+    message.shift();
+
+    return message;
+}
 
 // [+] START COMMAND [+]
 bot.command("start", (ctx) => {
@@ -38,8 +44,7 @@ bot.command("weather", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
     // Split the context and just get the query typed in.
-    const cityName = ctx.message.text.split(" ");
-    cityName.shift();
+    const cityName = getUserMessage(ctx);
 
     const data = await getWeather(cityName);
 
@@ -65,25 +70,6 @@ bot.command("weather", async (ctx) => {
         }
     }
 
-});
-
-// [+] AQI INDEX [+]
-bot.command("/aqi", async (ctx) => {
-    // typing...
-    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
-
-    // Make sure if the user typed the city name.
-    const city = ctx.message.text.split(" ");
-    city.shift();
-
-    // Check if country name is given.
-    if (!city.length > 0) {
-        // if no country then send usage.
-        return ctx.reply("🙅‍♂️ *Usage*\n/aqi city_name");
-    }
-
-    const result = await getAQI(city.join("-"));
-    ctx.replyWithMarkdown(`${result.markdown}`);
 });
 
 // [+] DOGGO IMAGE [+]
@@ -130,8 +116,9 @@ bot.command("whatis", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
     // Split the context and just get the word typed in.
-    const word = ctx.message.text.split(" ")[1];
-    if (!word) {
+    const word = getUserMessage(ctx);
+
+    if (!word.length > 0) {
         return ctx.reply("Usage: /whatis <query>");
     }
     // call whatIs service and get the result.
@@ -163,8 +150,8 @@ bot.command("urban", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
     // Split the context and just get the query typed in.
-    const query = ctx.message.text.split(" ");
-    query.shift();
+    const query = getUserMessage(ctx);
+
     const result = await ud(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
 });
@@ -175,8 +162,7 @@ bot.command("get", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
 
     // Split the context and just get the query typed in.
-    const search = ctx.message.text.split(" ");
-    search.shift();
+    const search = getUserMessage(ctx)
     const result = await googleImage(search);
 
     // Check for 'success' status in result and
@@ -192,8 +178,7 @@ bot.command("covid", async (ctx) => {
     // typing...
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
-    const country = ctx.message.text.split(" ");
-    country.shift();
+    const country = getUserMessage(ctx);
 
     // Check if country name is given.
     if (!country.length > 0) {
@@ -209,8 +194,7 @@ bot.command("wiki", async (ctx) => {
     // typing...
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
 
-    const query = ctx.message.text.split(" ");
-    query.shift();
+    const query = getUserMessage(ctx);
 
     // Check if country name is given.
     if (!query.length > 0) {
@@ -226,8 +210,7 @@ bot.command("wiki", async (ctx) => {
 bot.command("lyrics", async (ctx) => {
     // typing...
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
-    const songName = ctx.message.text.split(" ");
-    songName.shift();
+    const songName = getUserMessage(ctx);
 
     const resultObj = await getLyrics(songName);
     // console.log(resultObj);

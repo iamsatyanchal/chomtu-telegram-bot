@@ -1,12 +1,7 @@
-// Thanks to Lyreka: https://www.lyreka.com 
+// Lyreka: https://www.lyreka.com 
 
 const axios = require("axios");
-const cheerio = require("cheerio");
-
-const fetchHTML = async (url) => {
-	const { data } = await axios.get(url);
-	return cheerio.load(data);
-};
+const fetchHTML = require('./fetchHTML.js');
 
 const getLyrics = async (songName) => {
 	// console.log("SongName:", songName);
