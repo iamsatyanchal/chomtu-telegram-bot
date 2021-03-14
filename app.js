@@ -161,23 +161,28 @@ bot.command("get", async (ctx) => {
     // sending photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
 
-    // Split the context and just get the query typed in.
-    const search = getUserMessage(ctx)
-    const result = await googleImage(search);
+    try {
+        // Split the context and just get the query typed in.
+        const search = getUserMessage(ctx)
+        const result = await googleImage(search);
 
-    // Check for 'success' status in result and
-    // send reply accordingly
-    if (result.status === 'success') {
-        ctx.telegram.sendPhoto(ctx.chat.id, result.response, {
-            parse_mode: 'HTML',
-            reply_markup: {
-                inline_keyboard:[
-                    [{text: 'Image Link', url: result.response}]
-                ]
-            }
-        })
-    } else {
-        ctx.sendMessage(result.response);
+        // Check for 'success' status in result and
+        // send reply accordingly
+        if (result.status === 'success') {
+            await ctx.telegram.sendPhoto(ctx.chat.id, result.response, {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    inline_keyboard:[
+                        [{text: 'Image Link', url: result.response}]
+                    ]
+                }
+            })
+        } else {
+           await ctx.sendMessage(result.response);
+        }
+    } catch (e) {
+        console.log(e.message)
+        ctx.sendMessage('Error Occurred');
     }
 });
 
@@ -274,30 +279,31 @@ bot.command('hindilyrics', ctx => {
 })
 
 // [+] TESTING FOR INLINE MODE [+]
-bot.on('inline_query', async (ctx) => {
-    // console.log(ctx.inlineQuery);
-    // Get just the query
-    // console.log(ctx.inlineQuery.query);
-    const query = ctx.inlineQuery.query;
-    const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
-    const res = await axios.get(baseURL);   
+// bot.on('inline_query', async (ctx) => {
+//     // console.log(ctx.inlineQuery);
+//     // Get just the query
+//     // console.log(ctx.inlineQuery.query);
+//     const query = ctx.inlineQuery.query;
+//     const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
+//     const res = await axios.get(baseURL);   
 
-    result = res.data.data.map((song, index) => {
-        // console.log(song);
-        return {
-            type: 'article',
-            id: String(index),
-            title: song.title,
-            description: song.artist_names,
-            thumb_url: song.image_url_tiny,
-            input_message_content: {
-                message_text: getLyrics(song.url)
-            },
-        }
-    });
+//     result = res.data.data.map((song, index) => {
+//         // console.log(song);
+//         return {
+//             type: 'article',
+//             id: String(index),
+//             title: song.title,
+//             description: song.artist_names,
+//             thumb_url: song.image_url_tiny,
+//             input_message_content: {
+//                 message_text: `Song: ${song.title}\n$Lyrics: ${song.ur}`,
+//                 parse_mode: 'MarkdownV2'
+//             },
+//         }
+//     });
 
-    ctx.answerInlineQuery(result);
-})
+//     ctx.answerInlineQuery(result);
+// })
 
 // [+] startChomtu Function [+]
 const startChomtu = () => {

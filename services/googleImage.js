@@ -7,9 +7,9 @@ const getRandomPage = () => {
 	return Math.ceil(Math.random()*2);
 }
 
-const getRandomResult = () => {
+const getRandomResult = (length) => {
 	// random number for result
-	return Math.floor(Math.random()*9);
+	return Math.floor(Math.random() * length);
 }
 
 // Get a new google image and return it
@@ -21,23 +21,21 @@ const googleImage = (search) => {
 		.then(response => {
 			// If response is successful, but nothing found
 			if(!response.data.items) {
-				return {
-					status: 'fail',
-					response: 'I found nothing 😞'
-				}
+				throw Error('Nothing found');
 			}
+			const data = response.data.items;
 			// Return the image.
 			return {
 				status: 'success',
-				response: response.data.items[getRandomResult()].pagemap.cse_image[0].src,
+				response: response.data.items[getRandomResult(data.length)].pagemap.cse_image[0].src,
 			}
 		})
 		.catch(err => {
-			// Network error
+			// Network errors
 			console.log(err);
 			return {
 				status: 'fail',
-				response: 'Network Error Occurred'
+				response: `${err.message}`
 			}
 		})
 }
