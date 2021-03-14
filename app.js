@@ -167,10 +167,18 @@ bot.command("get", async (ctx) => {
 
     // Check for 'success' status in result and
     // send reply accordingly
-    const resp =
-        result.status === "success"
-            ? ctx.replyWithPhoto(result.response)
-            : ctx.reply(result.response);
+    if (result.status === 'success') {
+        ctx.telegram.sendPhoto(ctx.chat.id, result.response, {
+            parse_mode: 'HTML',
+            reply_markup: {
+                inline_keyboard:[
+                    [{text: 'Image Link', url: result.response}]
+                ]
+            }
+        })
+    } else {
+        ctx.sendMessage(result.response);
+    }
 });
 
 // [+] COVID INFO [+]
@@ -254,6 +262,42 @@ bot.command("help", (ctx) => {
 //     console.log(ctx.chat);
 // })
 
+
+// [+] SAVVN API [+]
+bot.command('hindilyrics', ctx => {
+    axios.get('https://saavn.me/lyrics?id=cymtugLP')
+        .then(response => {
+            // console.log(response.data)
+            ctx.reply(response.data.lyrics);
+        })
+        .catch(err => console.log(err));
+})
+
+// [+] TESTING FOR INLINE MODE [+]
+bot.on('inline_query', async (ctx) => {
+    // console.log(ctx.inlineQuery);
+    // Get just the query
+    // console.log(ctx.inlineQuery.query);
+    const query = ctx.inlineQuery.query;
+    const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
+    const res = await axios.get(baseURL);   
+
+    result = res.data.data.map((song, index) => {
+        // console.log(song);
+        return {
+            type: 'article',
+            id: String(index),
+            title: song.title,
+            description: song.artist_names,
+            thumb_url: song.image_url_tiny,
+            input_message_content: {
+                message_text: getLyrics(song.url)
+            },
+        }
+    });
+
+    ctx.answerInlineQuery(result);
+})
 
 // [+] startChomtu Function [+]
 const startChomtu = () => {

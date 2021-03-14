@@ -5,8 +5,9 @@ const fetchHTML = require('./fetchHTML.js');
 
 const getLyrics = async (songName) => {
 	// console.log("SongName:", songName);
-	const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
-	const html = fetchHTML(baseURL);
+	// const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
+	// const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
+	const html = fetchHTML(songName);
 
 	return html.then((result) => {
 		// console.log(result.text().trim());
@@ -22,12 +23,12 @@ const getLyrics = async (songName) => {
 		const cover = result(".track-cover-container img").attr("data-srcset");
 		const coverArray = cover.split(" "); // Convert the datasrc's to an array
 		return {
-			status: 'success',
-			songName: song,
-			artist,
+			// status: 'success',
+			// songName: song,
+			// artist,
 			lyrics,
-			cover: coverArray[4],
-			url: baseURL
+			// cover: coverArray[4],
+			// url: baseURL
 		}
 
 	}).catch((err) => {

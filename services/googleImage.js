@@ -29,7 +29,7 @@ const googleImage = (search) => {
 			// Return the image.
 			return {
 				status: 'success',
-				response: response.data.items[getRandomResult()].pagemap.cse_image[0].src
+				response: response.data.items[getRandomResult()].pagemap.cse_image[0].src,
 			}
 		})
 		.catch(err => {
