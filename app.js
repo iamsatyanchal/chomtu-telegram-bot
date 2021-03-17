@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getWeather = require("./services/getWeather.js");
@@ -279,31 +279,31 @@ bot.command('hindilyrics', ctx => {
 })
 
 // [+] TESTING FOR INLINE MODE [+]
-// bot.on('inline_query', async (ctx) => {
-//     // console.log(ctx.inlineQuery);
-//     // Get just the query
-//     // console.log(ctx.inlineQuery.query);
-//     const query = ctx.inlineQuery.query;
-//     const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
-//     const res = await axios.get(baseURL);   
+bot.on('inline_query', async (ctx) => {
+    // console.log(ctx.inlineQuery);
+    // Get just the query
+    // console.log(ctx.inlineQuery.query);
+    const query = ctx.inlineQuery.query;
+    const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
+    const res = await axios.get(baseURL);   
 
-//     result = res.data.data.map((song, index) => {
-//         // console.log(song);
-//         return {
-//             type: 'article',
-//             id: String(index),
-//             title: song.title,
-//             description: song.artist_names,
-//             thumb_url: song.image_url_tiny,
-//             input_message_content: {
-//                 message_text: `Song: ${song.title}\n$Lyrics: ${song.ur}`,
-//                 parse_mode: 'MarkdownV2'
-//             },
-//         }
-//     });
+    result = res.data.data.map((song, index) => {
+        // console.log(song);
 
-//     ctx.answerInlineQuery(result);
-// })
+        return {
+            type: 'article',
+            id: String(index),
+            title: song.title,
+            description: song.artist_names,
+            thumb_url: song.image_url_tiny,
+            input_message_content: {
+                message_text: `Song: ${song.title}\nLyrics: ${song.url}`
+            },
+        }
+    });
+
+    ctx.answerInlineQuery(result);
+})
 
 // [+] startChomtu Function [+]
 const startChomtu = () => {
