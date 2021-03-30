@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+const bot = new Telegraf(process.env.BRAD_API);
 
 // Import services
 const getWeather = require("./services/getWeather.js");
@@ -36,6 +36,15 @@ bot.on('sticker', (ctx) => {
     if (ctx.message.sticker.set_name === 'totottbokep') {
         ctx.deleteMessage(ctx.message.message_id);
     }
+})
+
+// [+] INSULT COMMAND [+]
+bot.command("insult", async (ctx) => {
+    axios.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
+        .then(res => {
+            ctx.reply(res.data.insult);
+        })
+        .catch(err => ctx.reply(err.message));
 })
 
 //  [+] WEATHER COMMAND [+]
@@ -254,6 +263,7 @@ bot.command("help", (ctx) => {
             `/aqi - air quality index\n` +
             `/doggo - get random dogs\n` +
             `/cat- random cat\n` +
+            `/insult\n` + 
             `/whatis - returns the meaning\n` +
             `/urban- urban dictionary definition\n` +
             `/get- search google for an image\n` +
