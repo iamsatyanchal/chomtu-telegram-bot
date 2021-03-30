@@ -17,7 +17,9 @@ const getCovidData = async (country) => {
 			.trim()
 			.split("\n\n");
 		// Updates: A sentence
-		const update = result(".news_li").text().split("[source]")[0].trim();
+		// const update = result(".news_li").text().split("[source]")[0].trim();
+		const update = result(".news_li").text().split('in')[0].trim();
+		// console.log(result('.label-counter').text().split('/')[2].trim())
 
 		// Trying to dates
 		const dateDiv = result(".content-inner").text().trim().split("\n")[2];
@@ -36,6 +38,7 @@ const getCovidData = async (country) => {
 		};
 	})
 	.catch((err) => {
+		console.log(err.message);
 		return {
 			satus: false,
 			message: 'Country Not Found!'

@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BRAD_API);
+const bot = new Telegraf(process.env.BOT_API);
 
 // Import services
 const getWeather = require("./services/getWeather.js");
@@ -178,11 +178,11 @@ bot.command("get", async (ctx) => {
                 }
             })
         } else {
-           await ctx.sendMessage(result.response);
+           await ctx.reply(result.response);
         }
     } catch (e) {
         console.log(e.message)
-        ctx.sendMessage('Error Occurred');
+        ctx.reply('Error Occurred');
     }
 });
 
