@@ -1,13 +1,10 @@
 # Chomtu- A simple Telegram Bot.
 
-### Talk to the bot [here](https://t.me/ChomtuBot)
-
 ### Bot Usage:
 Send a `/help` message to the bot and the bot will respond with all the available commands.
 
 ### About the bot:
-This is just a simple telegram bot made using telegraf.js (a nodejs library) <br />
-This bot is hosted on [repl.it](https://repl.it). Link to bot's webpage is [this](https://chomtu.vector2912.repl.co) 
+This is just a simple telegram bot to make my life a little bit easier. Made using telegraf.js (a nodejs library) <br /> 
 
 ### About the setup:
 1. Do `npm install` to install all the dependencies.
