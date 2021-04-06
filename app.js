@@ -1,14 +1,14 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BRAD_API);
+const bot = new Telegraf(process.env.BOT_API);
 
 // Import services
 const getWeather = require("./services/getWeather.js");
 const whatIs = require("./services/whatIs.js");
 const ud = require("./services/urban.js");
 const googleImage = require("./services/googleImage.js");
-const covid = require("./services/covid.js");
+const {covid, covidIn} = require("./services/covid.js");
 const wiki = require("./services/wiki.js");
 const getLyrics = require("./services/getLyrics.js");
 const { getDoggo, getCat } = require("./services/getRandomAnimals.js")
@@ -211,6 +211,20 @@ bot.command("covid", async (ctx) => {
     return ctx.replyWithMarkdown(result.markdown);
 });
 
+// [+] COVID INDIA [+]
+bot.command('covind', async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+    const district = getUserMessage(ctx);
+
+    if (!district.length > 0) {
+        return ctx.reply("Usage: /covidin district");
+    }
+
+    const result = await covidIn(district.join(''));
+    ctx.replyWithMarkdown(result.markdown);
+})
+
 // [+] WIKIPEDIA [+]
 bot.command("wiki", async (ctx) => {
     // typing...
@@ -268,6 +282,7 @@ bot.command("help", (ctx) => {
             `/urban- urban dictionary definition\n` +
             `/get- search google for an image\n` +
             `/covid- get covid data\n` +
+            `/covind- get covid data (India)` +
             `/wiki- wikipedia\n` +
             `/lyrics- get lyrics of song(ENGLISH)\n`
     );

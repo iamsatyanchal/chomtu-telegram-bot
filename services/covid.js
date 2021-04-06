@@ -1,6 +1,11 @@
 const axios = require("axios");
 const fetchHTML = require('./fetchHTML.js');
 
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const getCovidData = async (country) => {
 	baseURL = `https://www.worldometers.info/coronavirus/country/${country}`;
 	// Call fetchHTML function and get the HTML of the page.
@@ -65,4 +70,35 @@ const covid = async (country) => {
 	};
 };	
 
-module.exports = covid;
+// get Data for India
+const covidIn = (district) => {
+	const data = axios.get('https://api.covid19india.org/state_district_wise.json');
+	district = capitalizeFirstLetter(district);
+	return data.then(async (res) => {
+		// console.log(res.data['Andaman and Nicobar Islands']);
+			for (let [state, data] of Object.entries(res.data)) {
+				if (district in data.districtData) {
+					console.log(data.districtData[district]);
+					return {status: 'success', markdown: `🦠 Covid: *${district}*` + 
+									`\n\n*Updates*\nConfirmed: ${data.districtData[district].delta.confirmed}\n` + 
+									`Deaths: ${data.districtData[district].delta.deceased}\n` + 
+									`Recovered: ${data.districtData[district].delta.recovered}\n\n` +
+									`*Data*\nActive: ${data.districtData[district].active}\n` +
+									`Total Cases: ${data.districtData[district].confirmed}\n` + 
+									`Recovered: ${data.districtData[district].recovered}\n` +  
+									`Deaths: ${data.districtData[district].deceased}\n`
+					}	
+				}
+				// throw new Error('District not found')		
+			}
+			return {status: 'fail', markdown: 'District not found'};
+		}).catch (err => {
+		console.log(err);
+		return {status: 'fail', markdown: err.message};
+	})
+}
+
+module.exports = {
+	covid,
+	covidIn
+}
