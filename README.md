@@ -8,7 +8,7 @@ Send a `/help` message to the bot and the bot will respond with all the availabl
 ### About the bot:
 This is just a simple telegram bot to make your life a little bit easier with some misc commands. Made using telegraf.js (a nodejs library) <br /> 
 
-### How to the setup:
+### How to setup:
 0. Clone this repo.
 1. Do `npm install` to install all the dependencies.
 2. Get all your secrets from the following list:
@@ -23,5 +23,5 @@ This is just a simple telegram bot to make your life a little bit easier with so
 
 ### Send a /help command to get all the avaiable commands:
 ![image](https://user-images.githubusercontent.com/46086050/113854288-59225480-97bc-11eb-85d7-b91b2d04689a.png)
-<br><br>
+<br>
 ### Feel free to make a pull request if you find any error or to contribute
