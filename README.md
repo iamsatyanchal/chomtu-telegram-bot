@@ -24,4 +24,4 @@ This is just a simple telegram bot to make your life a little bit easier with so
 ### Send a /help command to get all the avaiable commands:
 ![image](https://user-images.githubusercontent.com/46086050/113854288-59225480-97bc-11eb-85d7-b91b2d04689a.png)
 <br><br>
-###Feel free to make a pull request if you find any error or to contribute
+### Feel free to make a pull request if you find any error or to contribute
