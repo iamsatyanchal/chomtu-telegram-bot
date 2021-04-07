@@ -78,7 +78,7 @@ const covidIn = (district) => {
 		// console.log(res.data['Andaman and Nicobar Islands']);
 			for (let [state, data] of Object.entries(res.data)) {
 				if (district in data.districtData) {
-					console.log(data.districtData[district]);
+					// console.log(data.districtData[district]);
 					return {status: 'success', markdown: `🦠 Covid: *${district}*` + 
 									`\n\n*Updates*\nConfirmed: ${data.districtData[district].delta.confirmed}\n` + 
 									`Deaths: ${data.districtData[district].delta.deceased}\n` + 

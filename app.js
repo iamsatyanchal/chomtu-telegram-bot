@@ -221,7 +221,7 @@ bot.command('covind', async (ctx) => {
         return ctx.reply("Usage: /covidin district");
     }
 
-    const result = await covidIn(district.join(''));
+    const result = await covidIn(district.join(' '));
     ctx.replyWithMarkdown(result.markdown);
 })
 
@@ -282,7 +282,7 @@ bot.command("help", (ctx) => {
             `/urban- urban dictionary definition\n` +
             `/get- search google for an image\n` +
             `/covid- get covid data\n` +
-            `/covind- get covid data (India)` +
+            `/covind- get covid data (India)\n` +
             `/wiki- wikipedia\n` +
             `/lyrics- get lyrics of song(ENGLISH)\n`
     );
