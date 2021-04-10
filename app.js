@@ -10,7 +10,7 @@ const ud = require("./services/urban.js");
 const googleImage = require("./services/googleImage.js");
 const {covid, covidIn} = require("./services/covid.js");
 const wiki = require("./services/wiki.js");
-const getLyrics = require("./services/getLyrics.js");
+const {getLyrics, saavnLyrics} = require("./services/getLyrics.js");
 const { getDoggo, getCat } = require("./services/getRandomAnimals.js")
 
 //  [+] FUNCTION [+]
@@ -248,6 +248,10 @@ bot.command("lyrics", async (ctx) => {
     ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
     const songName = getUserMessage(ctx);
 
+    if (!songName.length > 0) {
+        ctx.reply('Usage: /lyrics song_name');
+    }
+
     const resultObj = await getLyrics(songName);
     // console.log(resultObj);
     if (resultObj.status === 'success') {
@@ -270,6 +274,20 @@ bot.command("lyrics", async (ctx) => {
     
 });
 
+// [+] SAAVN [+]
+bot.command('saavn', async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+    const songName = getUserMessage(ctx);
+
+    if (!songName.length > 0) {
+        ctx.reply('Usage: /lyrics song_name');
+    }
+    
+    const lyrics = await saavnLyrics(songName.join('+'));
+    ctx.replyWithMarkdown(lyrics.markdown);
+})
+
 // [+] HELP [+]
 bot.command("help", (ctx) => {
     ctx.reply(
@@ -284,24 +302,10 @@ bot.command("help", (ctx) => {
             `/covid- get covid data\n` +
             `/covind- get covid data (India)\n` +
             `/wiki- wikipedia\n` +
-            `/lyrics- get lyrics of song(ENGLISH)\n`
+            `/lyrics- get lyrics of song(ENGLISH)\n` + 
+            `/saavn- get lyrics from saavn\n`
     );
 });
-
-// bot.command('/test', ctx => {
-//     console.log(ctx.chat);
-// })
-
-
-// [+] SAVVN API [+]
-bot.command('hindilyrics', ctx => {
-    axios.get('https://saavn.me/lyrics?id=cymtugLP')
-        .then(response => {
-            // console.log(response.data)
-            ctx.reply(response.data.lyrics);
-        })
-        .catch(err => console.log(err));
-})
 
 // [+] TESTING FOR INLINE MODE [+]
 bot.on('inline_query', async (ctx) => {

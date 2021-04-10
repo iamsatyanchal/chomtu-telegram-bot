@@ -41,4 +41,60 @@ const getLyrics = async (songName) => {
 	});
 };
 
-module.exports = getLyrics;
+
+// [+] From Saavn [+]
+const getSongDetails = (song) => {
+	const data  = axios.get(`https://saavn.me/search?song=${song}`);
+
+	return data.then(res => {
+		const songInfo = res.data[0];
+		// console.log(songInfo);
+
+		if (!res.data[0] > 0) {
+			return {status: 'fail', message: 'No song found'};
+		}
+
+		return {
+			status: 'success',
+			songId: songInfo.song_id,
+			songName: songInfo.song_name,
+			albumName: songInfo.album_name,
+			year: songInfo.year,
+			hasLyrics: songInfo.song_has_lyrics
+		}
+	}).catch (err => console.log(err.message));
+}
+
+const saavnLyrics = async (song) => {
+	const songDetails = await getSongDetails(song);
+	console.log(songDetails.status)
+
+	if (songDetails.status === 'fail') {
+		return { markdown: songDetails.message }	
+	}
+
+	if (!songDetails.hasLyrics) {
+		return { markdown: 'Lyrics are not available for this song 😔' };
+	}
+
+	const data = axios.get(`https://www.jiosaavn.com/api.php?__call=lyrics.getLyrics&ctx=web6dot0&_format=json&_marker=0?_marker=0&lyrics_id=${songDetails.songId}`);
+	return data.then(res => {
+		// console.log(res.data.lyrics)
+		// console.log('Sending Song Lyrics')
+		return {
+			markdown: 	`*${songDetails.songName}*\n` +
+						`Album: *${songDetails.albumName}*\n` + 
+						`Year: *${songDetails.year}*\n\n` +
+						`${res.data.lyrics.replace(/<br\s*\/?>/mg,"\n")}`
+		}
+	}).catch(err => {
+		console.log(err.message);
+		return { markdown: 'Error occured' };
+	});
+
+}
+
+module.exports =  {
+	getLyrics,
+	saavnLyrics
+}
