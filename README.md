@@ -2,6 +2,8 @@
 
 <img src="https://img.shields.io/static/v1?label=Telegram&message=Bot&color=blue"> <img src="https://img.shields.io/static/v1?message=Nodejs&color=green&label=Runtime"> <img src="https://img.shields.io/static/v1?message=>=4.0.3&color=orange&label=Telegraf.js">
 
+Talk to the bot [here](t.me/ChomtuBot)
+
 ### Bot Usage:
 Send a `/help` message to the bot and the bot will respond with all the available commands.
 
