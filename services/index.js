@@ -1,0 +1,9 @@
+export { default as covidService } from './covid';
+export { default as getWeather } from './getWeather';
+export { default as fetchHTML } from './fetchHTML';
+export { default as whatIs } from './whatIs';
+export { default as urbanDictionary } from './urban';
+export { default as googleImage } from './googleImage';
+export { default as wiki } from './wiki';
+export { default as getLyrics } from './getLyrics';
+export { default as randomAnimals } from './getRandomAnimals';

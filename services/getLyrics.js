@@ -1,9 +1,7 @@
-// Lyreka: https://www.lyreka.com 
+import axios from 'axios';
+import { fetchHTML } from './';
 
-const axios = require("axios");
-const fetchHTML = require('./fetchHTML.js');
-
-const getLyrics = async (songName) => {
+const lyreka = async (songName) => {
 	// console.log("SongName:", songName);
 	const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
 	// const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
@@ -65,7 +63,7 @@ const getSongDetails = (song) => {
 	}).catch (err => console.log(err.message));
 }
 
-const saavnLyrics = async (song) => {
+const saavn = async (song) => {
 	const songDetails = await getSongDetails(song);
 	console.log(songDetails.status)
 
@@ -82,7 +80,7 @@ const saavnLyrics = async (song) => {
 		// console.log(res.data.lyrics)
 		// console.log('Sending Song Lyrics')
 		return {
-			markdown: 	`*${songDetails.songName}*\n` +
+			markdown: 	`🎶 *${songDetails.songName}*\n` +
 						`Album: *${songDetails.albumName}*\n` + 
 						`Year: *${songDetails.year}*\n\n` +
 						`${res.data.lyrics.replace(/<br\s*\/?>/mg,"\n")}`
@@ -94,7 +92,7 @@ const saavnLyrics = async (song) => {
 
 }
 
-module.exports =  {
-	getLyrics,
-	saavnLyrics
+export default {
+	lyreka,
+	saavn
 }

@@ -1,17 +1,21 @@
-const { Telegraf } = require("telegraf");
-const axios = require("axios");
-require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_API);
+import { BRAD_API, BOT_API } from './config';
+import { Telegraf } from 'telegraf';
+import axios from 'axios';
+
+// Bot instance
+const bot = new Telegraf(BOT_API);
 
 // Import services
-const getWeather = require("./services/getWeather.js");
-const whatIs = require("./services/whatIs.js");
-const ud = require("./services/urban.js");
-const googleImage = require("./services/googleImage.js");
-const {covid, covidIn} = require("./services/covid.js");
-const wiki = require("./services/wiki.js");
-const {getLyrics, saavnLyrics} = require("./services/getLyrics.js");
-const { getDoggo, getCat } = require("./services/getRandomAnimals.js")
+import { 
+    covidService, 
+    getWeather,
+    whatIs,
+    urbanDictionary,
+    googleImage,
+    wiki,
+    getLyrics,
+    randomAnimals
+} from './services';
 
 //  [+] FUNCTION [+]
 const getUserMessage = (ctx) => {
@@ -86,7 +90,7 @@ bot.command("doggo", async (ctx) => {
     // send photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
 
-    let doggoUrl = await getDoggo();
+    let doggoUrl = await randomAnimals.getDoggo();
     // Split the URL content
     // and just get the extention of the image.
     let extension = doggoUrl.split(".")[2].toLowerCase();
@@ -109,7 +113,7 @@ bot.command("cat", async (ctx) => {
     // send photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
 
-    const catLink = await getCat();
+    const catLink = await randomAnimals.getCat();
 
     // If the links a gif, use video method
     if (catLink.includes("gif")) {
@@ -161,7 +165,7 @@ bot.command("urban", async (ctx) => {
     // Split the context and just get the query typed in.
     const query = getUserMessage(ctx);
 
-    const result = await ud(query);
+    const result = await urbanDictionary(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
 });
 
@@ -207,7 +211,7 @@ bot.command("covid", async (ctx) => {
         // if no country then send usage.
         return ctx.reply("Usage: /covid country_name");
     }
-    const result = await covid(country.join("-"));
+    const result = await covidService.covid(country.join("-"));
     return ctx.replyWithMarkdown(result.markdown);
 });
 
@@ -221,7 +225,7 @@ bot.command('covind', async (ctx) => {
         return ctx.reply("Usage: /covidin district");
     }
 
-    const result = await covidIn(district.join(' '));
+    const result = await covidService.covidIn(district.join(' '));
     ctx.replyWithMarkdown(result.markdown);
 })
 
@@ -252,7 +256,7 @@ bot.command("lyrics", async (ctx) => {
         ctx.reply('Usage: /lyrics song_name');
     }
 
-    const resultObj = await getLyrics(songName);
+    const resultObj = await getLyrics.lyreka(songName);
     // console.log(resultObj);
     if (resultObj.status === 'success') {
         // console.log(resultObj)
@@ -284,7 +288,7 @@ bot.command('saavn', async (ctx) => {
         ctx.reply('Usage: /lyrics song_name');
     }
     
-    const lyrics = await saavnLyrics(songName.join('+'));
+    const lyrics = await getLyrics.saavn(songName.join('+'));
     ctx.replyWithMarkdown(lyrics.markdown);
 })
 
@@ -343,4 +347,4 @@ const startChomtu = () => {
     console.log(`Bot ready \n${date} (IST)`);
 };
 
-module.exports = startChomtu;
+export default startChomtu;

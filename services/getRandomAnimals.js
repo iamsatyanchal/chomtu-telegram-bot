@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from 'axios';
 
 const getDoggo = () => {
     // Grab a new doggo-URL and return it
@@ -18,7 +18,7 @@ const getCat = () => {
 		.catch(err => err);
 }
 
-module.exports = {
-	getDoggo,
-	getCat
-};
+export default {
+    getDoggo,
+    getCat
+}

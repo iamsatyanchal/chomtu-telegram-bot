@@ -1,9 +1,10 @@
-const axios = require("axios");
+import axios from 'axios';
+import { OXFORD_APP_ID, OXFORD_APP_KEY } from '../config';
 
 // Make request
 const searchWord = (word) => {
     // Full URL of the endpoint
-    dict_link = `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}`;
+    let dict_link = `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}`;
 
     // Grab the data from the end,
     // put the data in appropriate property of your response object,
@@ -11,8 +12,8 @@ const searchWord = (word) => {
     return axios
         .get(dict_link, {
             headers: {
-                app_id: process.env.OXFORD_APP_ID,
-                app_key: process.env.OXFORD_APP_KEY,
+                app_id: OXFORD_APP_ID,
+                app_key: OXFORD_APP_KEY,
             },
         })
         .then((response) => {
@@ -39,7 +40,7 @@ const searchWord = (word) => {
 };
 
 const whatIs = async (word) => {
-    // Calls the searchWord function and pass the word toit
+    // Calls the searchWord function and pass the word to it
     const result = await searchWord(word);
     
     if (result.status !== "success") {
@@ -48,4 +49,4 @@ const whatIs = async (word) => {
     return result;
 };
 
-module.exports = whatIs;
+export default whatIs;

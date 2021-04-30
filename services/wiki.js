@@ -1,5 +1,5 @@
-const axios = require('axios');
-const fetchHTML = require('./fetchHTML.js');
+import axios from 'axios';
+import { fetchHTML } from './';
 
 // Get relevant data from fetchHTML for wikipedia 
 const scrapeWiki = async (query) => {
@@ -7,11 +7,11 @@ const scrapeWiki = async (query) => {
 	const data = fetchHTML(baseURL);
 
 	return data.then(result => {
-		// @ Get the short description (class shortdescription inside class mw-parser-output)
+		//  Get the short description (class shortdescription inside class mw-parser-output)
 		const shortDesc = result(".mw-parser-output .shortdescription").text();
-		// @ Get the main output 
+		//  Get the main output 
 		const mainOutput = result(".mw-parser-output p").text().split('\n');
-			// remove exmpty strings from the array
+		// remove exmpty strings from the array
 		const output = mainOutput.filter(res => res != '')
 		
 		return {
@@ -31,5 +31,4 @@ const scrapeWiki = async (query) => {
 	})
 }
 
-
-module.exports = scrapeWiki;
+export default scrapeWiki;

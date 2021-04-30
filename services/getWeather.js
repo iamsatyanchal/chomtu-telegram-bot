@@ -1,6 +1,6 @@
-const axios = require("axios");
-const fetchHTML = require('./fetchHTML.js');
-require("dotenv").config();
+import axios from 'axios';
+import { fetchHTML } from './';
+import { MAPBOX_KEY } from '../config';
 
 const getAQIRemark = (aqi) => {
     let remark;
@@ -55,12 +55,11 @@ const scrapeWeather = async (cityName) => {
 }
 
 const getCityCords = (cityName) => {
-    return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${process.env.MAPBOX_KEY}`).then(result => {
+    return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {
         const cords = result.data.features[0].geometry.coordinates.reverse();
         const newCord = [...cords.map(cord => cord.toFixed(2))];
-        // console.log(newCord.join())
         return newCord.join();
     }).catch(err => console.log('Network error'));
 }
 
-module.exports = scrapeWeather;
+export default scrapeWeather;
