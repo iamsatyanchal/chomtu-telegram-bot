@@ -25,7 +25,7 @@ const scrapeWeather = async (cityName) => {
         return data.then(result => {
             // Grab city, temp, aqi, weather from them HTML
             const city = result('.CurrentConditions--location--1Ayv3').text();
-            const temp = result('.TodayDetailsCard--feelsLikeTempValue--2aogo').text();
+            const temp = result('span[data-testid=TemperatureValue]').text().split('°')[0];
             const aqi = result('text[data-testid="DonutChartValue"]').text();
             const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
             const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text();
@@ -34,7 +34,7 @@ const scrapeWeather = async (cityName) => {
                 status: 'success',
                 url: baseURL, 
                 markdown: `<b>${city}</b>\n\n` + 
-                            `🌡 <b>Temperature:</b> ${temp}\n` +  
+                            `🌡 <b>Temperature:</b> ${temp}°\n` +  
                             `🌥 <b>Weather:</b> ${currentWeather}\n` + 
                             `🌬 <b>Air Quality:</b> ${aqi} (${getAQIRemark(aqi)})\n\n` + 
                             `<b>Last Update:</b> ${lastUpdated}`
