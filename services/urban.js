@@ -1,7 +1,6 @@
-const urban_dict = require('urban-dictionary');
+import urban_dict from 'urban-dictionary';
 
-const ud = (query) => {
-	console.log(query.join('-'));
+const urbanDictionary = (query) => {
 	// Get the meaning of the query word and return
 	return urban_dict.define(query.join('-'))
 		.then(result => {
@@ -23,4 +22,4 @@ const ud = (query) => {
 		})
 }	
 
-module.exports = ud;
+export default urbanDictionary;

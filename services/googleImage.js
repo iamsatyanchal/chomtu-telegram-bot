@@ -1,5 +1,5 @@
-const axios = require('axios')
-require('dotenv').config()
+import axios from 'axios';
+import { GOOGLE_API_KEY, CSE_ID } from '../config';
 
 // Generate Random numbers
 const getRandomPage = () => {
@@ -40,4 +40,4 @@ const googleImage = (search) => {
 		})
 }
 
-module.exports = googleImage;
+export default googleImage

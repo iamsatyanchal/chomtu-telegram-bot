@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node -r esm index.js",
+    "dev": "nodemon -r esm index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +15,12 @@
     "cheerio": "^1.0.0-rc.5",
     "cheerio-tableparser": "^1.0.1",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "telegraf": "^4.0.3",
     "urban-dictionary": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

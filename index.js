@@ -1,6 +1,7 @@
-const express = require("express");
+import express from 'express';
+import startChomtu from './app.js';
+
 const app = express();
-const startChomtu = require("./app.js");
 
 app.use(express.static('public'))
 

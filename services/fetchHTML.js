@@ -1,5 +1,5 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
+import axios from 'axios';
+import cheerio from 'cheerio';
 
 //  Fetch the HTML of a given URL
 const fetchHTML = async (url) => {
@@ -7,4 +7,4 @@ const fetchHTML = async (url) => {
 	return cheerio.load(data);
 };
 
-module.exports = fetchHTML;
+export default fetchHTML;

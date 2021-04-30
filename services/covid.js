@@ -1,13 +1,12 @@
-const axios = require("axios");
-const fetchHTML = require('./fetchHTML.js');
-
+import axios from 'axios';
+import fetchHTML from './fetchHTML';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const getCovidData = async (country) => {
-	baseURL = `https://www.worldometers.info/coronavirus/country/${country}`;
+	let baseURL = `https://www.worldometers.info/coronavirus/country/${country}`;
 	// Call fetchHTML function and get the HTML of the page.
 	const data = fetchHTML(baseURL);
 
@@ -98,7 +97,7 @@ const covidIn = (district) => {
 	})
 }
 
-module.exports = {
+export default {
 	covid,
 	covidIn
 }
