@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { fetchHTML } from './';
-import { MAPBOX_KEY } from '../config';
+import { MAPBOX_KEY } from '../../config';
 
 const getAQIRemark = (aqi) => {
     let remark;
@@ -12,6 +12,14 @@ const getAQIRemark = (aqi) => {
 
     return remark;
 }   
+
+const getCityCords = (cityName) => {
+    return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {
+        const cords = result.data.features[0].geometry.coordinates.reverse();
+        const newCord = [...cords.map(cord => cord.toFixed(2))];
+        return newCord.join();
+    }).catch(err => console.log('Network error'));
+}
 
 // [+] Scrape Weather.com [+]
 const scrapeWeather = async (cityName) => {
@@ -52,14 +60,6 @@ const scrapeWeather = async (cityName) => {
             message: 'Network Error'
         }
     }
-}
-
-const getCityCords = (cityName) => {
-    return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {
-        const cords = result.data.features[0].geometry.coordinates.reverse();
-        const newCord = [...cords.map(cord => cord.toFixed(2))];
-        return newCord.join();
-    }).catch(err => console.log('Network error'));
 }
 
 export default scrapeWeather;

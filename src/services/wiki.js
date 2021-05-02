@@ -2,7 +2,7 @@ import axios from 'axios';
 import { fetchHTML } from './';
 
 // Get relevant data from fetchHTML for wikipedia 
-const scrapeWiki = async (query) => {
+export default async function scrapeWiki (query) {
 	const baseURL = `https://en.wikipedia.org/wiki/${query.join('%20')}`
 	const data = fetchHTML(baseURL);
 
@@ -30,5 +30,3 @@ const scrapeWiki = async (query) => {
 		}
 	})
 }
-
-export default scrapeWiki;

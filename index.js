@@ -1,5 +1,5 @@
 import express from 'express';
-import startChomtu from './app.js';
+import startChomtu from './src/app.js';
 
 const app = express();
 

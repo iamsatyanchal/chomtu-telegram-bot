@@ -1,6 +1,6 @@
 import urban_dict from 'urban-dictionary';
 
-const urbanDictionary = (query) => {
+export default function urbanDictionary(query) {
 	// Get the meaning of the query word and return
 	return urban_dict.define(query.join('-'))
 		.then(result => {
@@ -16,10 +16,8 @@ const urbanDictionary = (query) => {
 		.catch(err => {
 			const resp = {
 				status: 'fail',
-				markdown: '😡 You hurt my brain with such non existing words!'
+				markdown: '😡 No such word or phrase!'
 			};
 			return resp;
 		})
 }	
-
-export default urbanDictionary;

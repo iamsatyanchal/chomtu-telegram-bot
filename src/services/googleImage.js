@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GOOGLE_API_KEY, CSE_ID } from '../config';
+import { GOOGLE_API_KEY, CSE_ID } from '../../config';
 
 // Generate Random numbers
 const getRandomPage = () => {

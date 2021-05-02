@@ -1,4 +1,4 @@
-import { BRAD_API, BOT_API } from './config';
+import { BRAD_API, BOT_API } from '../config';
 import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
@@ -294,20 +294,19 @@ bot.command('saavn', async (ctx) => {
 
 // [+] HELP [+]
 bot.command("help", (ctx) => {
-    ctx.reply(
-        `/weather - weather information\n` +
-            `/aqi - air quality index\n` +
-            `/doggo - get random dogs\n` +
-            `/cat- random cat\n` +
-            `/insult\n` + 
-            `/whatis - returns the meaning\n` +
-            `/urban- urban dictionary definition\n` +
-            `/get- search google for an image\n` +
-            `/covid- get covid data\n` +
-            `/covind- get covid data (India)\n` +
-            `/wiki- wikipedia\n` +
-            `/lyrics- get lyrics of song(ENGLISH)\n` + 
-            `/saavn- get lyrics from saavn\n`
+    ctx.replyWithMarkdown(
+        `/weather - Weather\n` +
+            `/doggo - Returns random dogs\n` +
+            `/cat- Returns random cats\n` +
+            `/insult- :)\n` + 
+            `/whatis - Dictionary definition\n` +
+            `/urban- Urban dictionary definition\n` +
+            `/get- Returns image from google\n` +
+            `/covid- Returns country wise covid data\n` +
+            `/covind- Returns district wise covid data (India)\n` +
+            `/wiki- Wikipedia\n` +
+            `/lyrics- Search for lyrics of a song (*English*)\n` + 
+            `/saavn- Search for hindi song lyrics\n`
     );
 });
 

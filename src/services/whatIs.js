@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { OXFORD_APP_ID, OXFORD_APP_KEY } from '../config';
+import { OXFORD_APP_ID, OXFORD_APP_KEY } from '../../config';
 
 // Make request
 const searchWord = (word) => {
