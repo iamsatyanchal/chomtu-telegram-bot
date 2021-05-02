@@ -25,5 +25,3 @@ This is just a simple telegram bot to make your life a little bit easier with so
 
 ### Send a /help command to get all the avaiable commands:
 ![image](https://user-images.githubusercontent.com/46086050/116827337-1b93ca00-abb6-11eb-84a8-60d8b8820295.png)
-<br>
-### Feel free to make a pull request if you find any error or to contribute
