@@ -14,7 +14,8 @@ import {
     googleImage,
     wiki,
     getLyrics,
-    randomAnimals
+    randomAnimals,
+    fetch
 } from './services';
 
 //  [+] FUNCTION [+]
@@ -292,6 +293,28 @@ bot.command('saavn', async (ctx) => {
     ctx.replyWithMarkdown(lyrics.markdown);
 })
 
+// [+] FETCH IMAGE RESULTS FROM DOGPILE [+]
+bot.command('fetch', async (ctx) => {
+    // sending photo...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
+    const query = getUserMessage(ctx);
+
+    const result = await fetch(query.join('+'));
+
+    if (result.status === "fail") {
+        ctx.reply("Sorry, noting found!");
+    }
+
+    await ctx.telegram.sendPhoto(ctx.chat.id, result.data, {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard:[
+                [{text: 'Image Link', url: result.url}]
+            ]
+        }
+    })
+})
+
 // [+] HELP [+]
 bot.command("help", (ctx) => {
     ctx.replyWithMarkdown(
@@ -301,12 +324,13 @@ bot.command("help", (ctx) => {
             `/insult- :)\n` + 
             `/whatis - Dictionary definition\n` +
             `/urban- Urban dictionary definition\n` +
-            `/get- Returns image from google\n` +
+            `/get (ALPHA)- Returns image from google\n` +
             `/covid- Returns country wise covid data\n` +
             `/covind- Returns district wise covid data (India)\n` +
             `/wiki- Wikipedia\n` +
             `/lyrics- Search for lyrics of a song (*English*)\n` + 
-            `/saavn- Search for hindi song lyrics\n`
+            `/saavn- Search for hindi song lyrics\n` +
+            `/fetch- Returns image results` 
     );
 });
 
