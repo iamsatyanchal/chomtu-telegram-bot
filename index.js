@@ -7,7 +7,7 @@ app.use(express.static('public'))
 
 // Root route
 app.get("/", (req, res) => {
-	res.render('index.html');
+	res.send('<h1>Bot Online</h1>');
 });
 
 // Run the bot 
