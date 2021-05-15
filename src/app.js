@@ -305,6 +305,10 @@ bot.command('fetch', async (ctx) => {
         ctx.reply("Sorry, noting found!");
     }
 
+    if (!result.data) {
+        ctx.reply("Error Occured!");
+    }
+
     await ctx.telegram.sendPhoto(ctx.chat.id, result.data, {
         parse_mode: 'HTML',
         reply_markup: {
