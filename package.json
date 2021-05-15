@@ -17,7 +17,7 @@
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "telegraf": "^4.0.3",
+    "telegraf": "^3.38.0",
     "urban-dictionary": "^3.0.0"
   },
   "devDependencies": {

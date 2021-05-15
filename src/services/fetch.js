@@ -1,7 +1,7 @@
 import { fetchHTML } from './';
 
 const randomNumber = (max) => {
-	return Math.floor(Math.random() * max);
+	return Math.floor(Math.random() * max - 1);
 }
 
 export default async function fetch (query) {
@@ -22,6 +22,7 @@ export default async function fetch (query) {
 		})
 
 	} catch (e) {
+	    console.log(e.message)
 		return {"status": "fail", "msg": e.message}
 	}
-} 
+}

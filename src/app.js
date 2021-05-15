@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
 // Bot instance
-const bot = new Telegraf(BOT_API);
+const bot = new Telegraf(BRAD_API);
 
 // Import services
 import { 
@@ -306,9 +306,8 @@ bot.command('fetch', async (ctx) => {
     }
 
     if (!result.data) {
-        return ctx.reply("Error Occurred!");
+        return ctx.reply("Error Occurred");
     }
-
     await ctx.telegram.sendPhoto(ctx.chat.id, result.data, {
         parse_mode: 'HTML',
         reply_markup: {
@@ -334,7 +333,7 @@ bot.command("help", (ctx) => {
             `/wiki- Wikipedia\n` +
             `/lyrics- Search for lyrics of a song (*English*)\n` + 
             `/saavn- Search for hindi song lyrics\n` +
-            `/fetch- Returns image results from Bing` 
+            `/fetch- Returns image results` 
     );
 });
 
