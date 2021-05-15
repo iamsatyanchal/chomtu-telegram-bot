@@ -1,16 +1,17 @@
 import express from 'express';
 import startChomtu from './src/app.js';
+import serverless = require('serverless-http');
 
 const app = express();
+const router = express.Router();
 
-app.use(express.static('public'))
-
-// Root route
-app.get("/", (req, res) => {
+router.get('/', (req, res) => {
 	res.send('<h1>Bot Online</h1>');
-});
+})
 
-// Run the bot 
-app.listen(3000, () => {
-	startChomtu();
-});
+app.use('/', router);
+
+export default {
+	app,
+	serverless(app)
+}
