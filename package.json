@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "netlify-lambda build express",
+    // "build": "netlify-lambda build express",
     "start": "node -r esm index.js",
     "dev": "nodemon -r esm index.js"
   },
