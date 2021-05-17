@@ -346,22 +346,27 @@ bot.on('inline_query', async (ctx) => {
     const baseURL = `https://www.lyreka.com/api/v1/search/songs?q=${query}&limit=10`;
     const res = await axios.get(baseURL);   
 
-    result = res.data.data.map((song, index) => {
-        // console.log(song);
+    try {
+        result = res.data.data.map((song, index) => {
+            // console.log(song);
 
-        return {
-            type: 'article',
-            id: String(index),
-            title: song.title,
-            description: song.artist_names,
-            thumb_url: song.image_url_tiny,
-            input_message_content: {
-                message_text: `Song: ${song.title}\nLyrics: ${song.url}`
-            },
-        }
-    });
+            return {
+                type: 'article',
+                id: String(index),
+                title: song.title,
+                description: song.artist_names,
+                thumb_url: song.image_url_tiny,
+                input_message_content: {
+                    message_text: `Song: ${song.title}\nLyrics: ${song.url}`
+                },
+            }
+        });
 
-    ctx.answerInlineQuery(result);
+        ctx.answerInlineQuery(result);
+    } catch (e) {
+        console.log(e.message);
+        ctx.answerInlineQuery("Error Occurred");
+    }
 })
 
 // [+] startChomtu Function [+]

@@ -13,6 +13,14 @@ const getAQIRemark = (aqi) => {
     return remark;
 }   
 
+const iterateHTML = (result, attr) => {
+    const arr = [];
+    result(attr).each((i, element) => {
+        arr.push(result(element).text());
+    })
+    return arr;
+}
+
 const getCityCords = (cityName) => {
     return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {
         const cords = result.data.features[0].geometry.coordinates.reverse();
@@ -36,15 +44,25 @@ const scrapeWeather = async (cityName) => {
             const temp = result('span[data-testid=TemperatureValue]').text().split('°')[0];
             const aqi = result('text[data-testid="DonutChartValue"]').text();
             const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
-            const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text();
-            // city, temp, currentWeather, aqi
+            const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text().split('As of').join('');
+            const detailsLabels = iterateHTML(result, '.WeatherDetailsListItem--label--3JSSI');
+            // console.log(detailsLabels);
+            const detailsValues = iterateHTML(result, '.WeatherDetailsListItem--wxData--23DP5');
+            // console.log(detailsValues);
+
+            // Combine detailsLabels and detailsValues to form an object
+            const details = Object.assign(...detailsLabels.map((key, i) => ({[key]: detailsValues[i]})));
             return { 
                 status: 'success',
                 url: baseURL, 
                 markdown: `<b>${city}</b>\n\n` + 
                             `🌡 <b>Temperature:</b> ${temp}°\n` +  
-                            `🌥 <b>Weather:</b> ${currentWeather}\n` + 
-                            `🌬 <b>Air Quality:</b> ${aqi} (${getAQIRemark(aqi)})\n\n` + 
+                            `🌥 <b>Weather:</b> ${currentWeather}\n\n` + 
+                            `🌬 <b>Wind:</b> ${details['Wind'].split('Wind Direction').join(" ")}\n` + 
+                            `💧 <b>Humidity:</b> ${details['Humidity']}\n` + 
+                            `👁 <b>Visibility:</b> ${details['Visibility']}\n\n` + 
+                            `<b>UV Index:</b> ${details['UV Index']}\n` + 
+                            `<b>Air Quality:</b> ${aqi} (${getAQIRemark(aqi)})\n\n` + 
                             `<b>Last Update:</b> ${lastUpdated}`
             };
 

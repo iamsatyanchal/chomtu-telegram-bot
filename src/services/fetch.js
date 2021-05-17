@@ -13,7 +13,11 @@ export default async function fetch (query) {
 		})
 
 		const imageNumber = randomNumber(images.length);
-		const image = await images[imageNumber]
+		let image = await images[imageNumber]
+
+		if (!image) {
+			image = await images[randomNumber(images.length)]
+		}
 
 		return ({
 			"status": "success",
