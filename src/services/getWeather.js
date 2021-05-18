@@ -23,8 +23,8 @@ const iterateHTML = (result, attr) => {
 
 const getCityCords = (cityName) => {
     return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {
-        const cords = result.data.features[0].geometry.coordinates.reverse();
-        const newCord = [...cords.map(cord => cord.toFixed(2))];
+        const cords = result.data.features[0].center.reverse();
+        const newCord = [...cords.map(cord => cord.toFixed(3).slice(0, -1))];
         return newCord.join();
     }).catch(err => console.log('Network error'));
 }
