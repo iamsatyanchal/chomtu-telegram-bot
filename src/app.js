@@ -64,7 +64,7 @@ bot.command("weather", async (ctx) => {
 
     // check for arguments
     if (!cityName.length > 0) {
-        ctx.reply('Usage: /weather <city_name>')
+        return ctx.reply('Usage: /weather <city_name>')
     } else {
         // Make sure if the user typed the city name.
         if (data.status === 'success') {
@@ -166,6 +166,10 @@ bot.command("urban", async (ctx) => {
     // Split the context and just get the query typed in.
     const query = getUserMessage(ctx);
 
+    if (!query.length > 0) {
+        return ctx.reply("Usage: /urban <query>")
+    }
+
     const result = await urbanDictionary(query);
     ctx.replyWithMarkdown(`${result.markdown}`);
 });
@@ -174,6 +178,11 @@ bot.command("urban", async (ctx) => {
 bot.command("get", async (ctx) => {
     // sending photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
+    const query = getUserMessage(ctx);
+
+    if (!query.length > 0) {
+        return ctx.reply("Usage: /get <query>")
+    }
 
     try {
         // Split the context and just get the query typed in.
@@ -254,7 +263,7 @@ bot.command("lyrics", async (ctx) => {
     const songName = getUserMessage(ctx);
 
     if (!songName.length > 0) {
-        ctx.reply('Usage: /lyrics song_name');
+        return ctx.reply('Usage: /lyrics song_name');
     }
 
     const resultObj = await getLyrics.lyreka(songName);
@@ -286,7 +295,7 @@ bot.command('saavn', async (ctx) => {
     const songName = getUserMessage(ctx);
 
     if (!songName.length > 0) {
-        ctx.reply('Usage: /lyrics song_name');
+        return ctx.reply('Usage: /lyrics song_name');
     }
     
     const lyrics = await getLyrics.saavn(songName.join('+'));
@@ -298,6 +307,10 @@ bot.command('fetch', async (ctx) => {
     // sending photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
     const query = getUserMessage(ctx);
+
+    if (!query.length > 0) {
+        return ctx.reply("Usage: /fetch <query>")
+    }
 
     const result = await fetch(query.join('+'));
 
