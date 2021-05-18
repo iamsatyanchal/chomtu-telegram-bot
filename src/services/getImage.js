@@ -7,7 +7,7 @@ const randomNumber = (max) => {
 export default async function getImage (query) {
 	try {
 		let images = [];
-		const imageData = await fetchHTML(`https://www.dogpile.com/serp?qc=images&q=${query}`);
+		const imageData = await fetchHTML(`https://www.dogpile.com/serp?qc=images&q=${query}&sc=O9824CiY0HrT20`);
 		imageData(".image > a > img").each((i, img) => {
 			images.push(imageData(img).attr("src"));
 		})

@@ -7,7 +7,4 @@ export const {
 	OXFORD_APP_ID,
 	OXFORD_APP_KEY,
 	MAPBOX_KEY,
-	CSE_ID,
-	CUSTOM_SEARCH,
-	GOOGLE_API_KEY,
 } = process.env;
