@@ -21,4 +21,4 @@ A telegram bot to make your life a little bit easier when using telegram with so
 4. Run `npm start` or `node index.js`
 
 ### Send a /help command to get all the avaiable commands:
-![image](https://user-images.githubusercontent.com/46086050/116827337-1b93ca00-abb6-11eb-84a8-60d8b8820295.png)
+![image](https://user-images.githubusercontent.com/46086050/118663585-6cd6c700-b80e-11eb-9c79-ed532ca3859d.png)
