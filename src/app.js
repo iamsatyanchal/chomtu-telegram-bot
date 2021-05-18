@@ -11,11 +11,10 @@ import {
     getWeather,
     whatIs,
     urbanDictionary,
-    googleImage,
     wiki,
     getLyrics,
     randomAnimals,
-    fetch
+    get
 } from './services';
 
 //  [+] FUNCTION [+]
@@ -32,16 +31,6 @@ bot.command("start", (ctx) => {
         *Waddup?*\n\nType /help to see all the available commands
     `);
 });
-
-// [+] STICKER [+]
-bot.on('sticker', (ctx) => {
-    //console.log(ctx.message.sticker.set_name);
-
-    // AUTO DELETE THE STICKER
-    if (ctx.message.sticker.set_name === 'totottbokep') {
-        ctx.deleteMessage(ctx.message.message_id);
-    }
-})
 
 // [+] INSULT COMMAND [+]
 bot.command("insult", async (ctx) => {
@@ -174,41 +163,6 @@ bot.command("urban", async (ctx) => {
     ctx.replyWithMarkdown(`${result.markdown}`);
 });
 
-// [+] CUSTOM IMAGE SEARCH [+]
-bot.command("get", async (ctx) => {
-    // sending photo...
-    ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
-    const query = getUserMessage(ctx);
-
-    if (!query.length > 0) {
-        return ctx.reply("Usage: /get <query>")
-    }
-
-    try {
-        // Split the context and just get the query typed in.
-        const search = getUserMessage(ctx)
-        const result = await googleImage(search);
-
-        // Check for 'success' status in result and
-        // send reply accordingly
-        if (result.status === 'success') {
-            await ctx.telegram.sendPhoto(ctx.chat.id, result.response, {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    inline_keyboard:[
-                        [{text: 'Image Link', url: result.response}]
-                    ]
-                }
-            })
-        } else {
-           await ctx.reply(result.response);
-        }
-    } catch (e) {
-        console.log(e.message)
-        ctx.reply('Error Occurred');
-    }
-});
-
 // [+] COVID INFO [+]
 bot.command("covid", async (ctx) => {
     // typing...
@@ -303,16 +257,16 @@ bot.command('saavn', async (ctx) => {
 })
 
 // [+] FETCH IMAGE RESULTS FROM DOGPILE [+]
-bot.command('fetch', async (ctx) => {
+bot.command('get', async (ctx) => {
     // sending photo...
     ctx.telegram.sendChatAction(ctx.chat.id, 'upload_photo');
     const query = getUserMessage(ctx);
 
     if (!query.length > 0) {
-        return ctx.reply("Usage: /fetch <query>")
+        return ctx.reply("Usage: /get <query>")
     }
 
-    const result = await fetch(query.join('+'));
+    const result = await get(query.join('+'));
 
     if (result.status === "fail") {
         ctx.reply("Sorry, noting found!");
@@ -340,13 +294,12 @@ bot.command("help", (ctx) => {
             `/insult- :)\n` + 
             `/whatis - Dictionary definition\n` +
             `/urban- Urban dictionary definition\n` +
-            `/get (ALPHA)- Returns image from google\n` +
+            `/get- Returns image result\n` +
             `/covid- Returns country wise covid data\n` +
             `/covind- Returns district wise covid data (India)\n` +
             `/wiki- Wikipedia\n` +
             `/lyrics- Search for lyrics of a song (*English*)\n` + 
-            `/saavn- Search for hindi song lyrics\n` +
-            `/fetch- Returns image results` 
+            `/saavn- Search for hindi song lyrics\n` 
     );
 });
 

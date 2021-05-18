@@ -4,7 +4,7 @@ const randomNumber = (max) => {
 	return Math.floor(Math.random() * max - 1);
 }
 
-export default async function fetch (query) {
+export default async function getImage (query) {
 	try {
 		let images = [];
 		const imageData = await fetchHTML(`https://www.dogpile.com/serp?qc=images&q=${query}`);

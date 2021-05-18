@@ -8,7 +8,7 @@ Talk to the bot [here](https://t.me/ChomtuBot)
 Send a `/help` message to the bot and the bot will respond with all the available commands.
 
 ### About the bot:
-This is just a simple telegram bot to make your life a little bit easier with some misc commands. Made using telegraf.js (a nodejs library) <br /> 
+A telegram bot to make your life a little bit easier when using telegram with some misc commands.<br /> 
 
 ### How to setup:
 0. Clone this repo.
@@ -17,9 +17,6 @@ This is just a simple telegram bot to make your life a little bit easier with so
 	* Telegram Bot: [@BotFather](https://t.me/BotFather)
 	* Mapbox API (for weather): [Mapbox.com](https://docs.mapbox.com/help/glossary/access-token/)
 	* Oxford API: [Oxforddictionaries.com](https://developer.oxforddictionaries.com)
-	* Google CSE: [Google Custom Search Enginer](https://support.google.com/programmable-search/answer/2649143?hl=en)
-	* Custom Search Key: [Custom-Search](https://developers.google.com/custom-search/v1/introduction)
-	* Google API Key: [Goole-Api-Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 3. Put all your secret tokens in `.env` file as shown in [.env.example](https://github.com/arsen1c/chomtu-telegram-bot/blob/master/.env.example)
 4. Run `npm start` or `node index.js`
 
