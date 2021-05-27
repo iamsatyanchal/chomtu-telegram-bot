@@ -26,7 +26,7 @@ export default async function getImage (query) {
 		})
 
 	} catch (e) {
-	    console.log(e.message)
+	    console.log(e);
 		return {"status": "fail", "msg": e.message}
 	}
 }
