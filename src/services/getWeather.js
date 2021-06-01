@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { fetchHTML } from './';
+import { fetchHTML } from '../helpers';
 import { MAPBOX_KEY } from '../../config';
+import { iterateHTML } from '../helpers';
 
 const getAQIRemark = (aqi) => {
     let remark;
@@ -13,13 +14,13 @@ const getAQIRemark = (aqi) => {
     return remark;
 }   
 
-const iterateHTML = (result, attr) => {
-    const arr = [];
-    result(attr).each((i, element) => {
-        arr.push(result(element).text());
-    })
-    return arr;
-}
+// const iterateHTML = (result, attr) => {
+//     const arr = [];
+//     result(attr).each((i, element) => {
+//         arr.push(result(element).text());
+//     })
+//     return arr;
+// }
 
 const getCityCords = (cityName) => {
     return axios.get(`http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`).then(result => {

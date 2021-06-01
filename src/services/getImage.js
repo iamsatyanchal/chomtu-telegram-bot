@@ -1,4 +1,4 @@
-import { fetchHTML } from './';
+import { fetchHTML } from '../helpers';
 
 const randomNumber = (max) => {
 	return Math.floor(Math.random() * max - 1);

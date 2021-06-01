@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
 // Bot instance
-const bot = new Telegraf(BRAD_API);
+const bot = new Telegraf(BOT_API);
 
 // Import services
 import { 
@@ -221,18 +221,15 @@ bot.command("lyrics", async (ctx) => {
     }
 
     const resultObj = await getLyrics.lyreka(songName);
-    // console.log(resultObj);
     if (resultObj.status === 'success') {
-        // console.log(resultObj)
        try {
          await ctx.replyWithMarkdown(`
             *🎶 Song Name:* ${resultObj.songName}\n` +
-            `*Artist:* ${resultObj.artist}\n\n` +
+            `*Artist[s]:* ${resultObj.artist}\n\n` +
             `*Lyrics*:\n${resultObj.lyrics}\n`+
             `[Cover](${resultObj.cover})`
         )
        } catch {
-            // console.log(e.message);
             await ctx.replyWithMarkdown(`😳 Song is too long, read the lyrics [here](${resultObj.url})\n`);
         }
 

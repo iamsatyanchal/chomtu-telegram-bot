@@ -1,31 +1,28 @@
 import axios from 'axios';
-import { fetchHTML } from './';
+import { fetchHTML, iterateHTML } from '../helpers';
 
 const lyreka = async (songName) => {
-	// console.log("SongName:", songName);
 	const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
-	// const baseURL = `https://www.lyreka.com/song/${songName.join("-")}-lyrics`;
 	const html = fetchHTML(baseURL);
 
 	return html.then((result) => {
-		// console.log(result.text().trim());
-
 		// Get Song name
-		const song = result('h1').text().split('Lyrics')[0].trim();
-		// console.log('SONG:', song.split("Lyrics")[0].trim());
+		const songName = result('.lyrics-container > h2 > q').text();
+
 		// Get Artist Name
-		const artist = result("b .artist-name").text();
+		const artist = iterateHTML(result, 'div.col-8 > h1 > b > a.artist-name').join(', ');
+
 		// Get the Lyrics Div.
-		const lyrics = result(".lyrics").text();
+		const lyrics = result('div.lyrics').text().trim();
+
 		// Grab the cover pic (128w) of that song.
-		const cover = result(".track-cover-container img").attr("data-srcset");
-		const coverArray = cover.split(" "); // Convert the datasrc's to an array
+		const coverURL = result('.track-cover-container img').attr("srcset").split(',')[2].split(' ')[1];
 		return {
 			status: 'success',
-			songName: song,
+			songName,
 			artist,
 			lyrics,
-			cover: coverArray[4],
+			cover: coverURL,
 			url: baseURL
 		}
 

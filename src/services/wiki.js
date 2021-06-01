@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fetchHTML } from './';
+import { fetchHTML } from '../helpers';
 
 // Get relevant data from fetchHTML for wikipedia 
 export default async function scrapeWiki (query) {
