@@ -14,7 +14,8 @@ import {
     wiki,
     getLyrics,
     randomAnimals,
-    get
+    get,
+    ytdl
 } from './services';
 
 //  [+] FUNCTION [+]
@@ -74,6 +75,33 @@ bot.command("weather", async (ctx) => {
     }
 
 });
+
+// [+] YT AUDIO [+]
+bot.command('yt', async(ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+    // Get video URL
+    const videoID = getUserMessage(ctx)[0];
+    console.log('VideoID:', videoID);
+    if (!(videoID.includes('youtube') || videoID.includes('youtu.be'))) {
+        return ctx.reply('I only accept youtube links');
+    } else if (videoID.includes('&list')) {
+        return ctx.reply('Calm down! Just give a single video link');
+    }
+
+    const songLink = await ytdl(videoID);
+    console.log('Song LInk:', songLink.status ? true : songLink.message);
+    if (!songLink.status) {
+        return ctx.reply(songLink.message);
+    };
+    
+    try {
+        console.log(songLink.url);
+        await ctx.replyWithVideo(songLink.url);
+    } catch (e) {
+        await ctx.reply(e.message);
+    }
+})
 
 // [+] DOGGO IMAGE [+]
 bot.command("doggo", async (ctx) => {
