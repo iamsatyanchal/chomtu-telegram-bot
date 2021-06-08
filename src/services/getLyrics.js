@@ -15,15 +15,14 @@ const lyreka = async (songName) => {
 		// Get the Lyrics Div.
 		const lyrics = result('div.lyrics').text().trim();
 
-		// Grab the cover pic (128w) of that song.
-		// const coverURL = result('.track-cover-container img').attr("srcset").split(',')[2].split(' ')[1];
+		// Grab the cover pic of that song.
 		const coverURL = result('img.img-track-cover').attr("src");
 		return {
 			status: 'success',
 			songName,
 			artist,
 			lyrics,
-			cover: coverURL || null,
+			cover: coverURL,
 			url: baseURL
 		}
 
