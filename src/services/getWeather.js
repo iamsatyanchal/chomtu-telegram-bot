@@ -44,11 +44,11 @@ const scrapeWeather = async (cityName) => {
             const city = result('.CurrentConditions--location--1Ayv3').text();
             const temp = result('span[data-testid=TemperatureValue]').text().split('°')[0];
             const aqi = result('text[data-testid="DonutChartValue"]').text();
-            const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
-            const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text().split('As of').join('');
-            const detailsLabels = iterateHTML(result, '.WeatherDetailsListItem--label--3JSSI');
+            const currentWeather = result('.CurrentConditions--phraseValue--mZC_p').text();
+            const lastUpdated = result('.CurrentConditions--timestamp--1ybTk').text().split('As of').join('');
+            const detailsLabels = iterateHTML(result, '.WeatherDetailsListItem--label--2ZacS');
             // console.log(detailsLabels);
-            const detailsValues = iterateHTML(result, '.WeatherDetailsListItem--wxData--23DP5');
+            const detailsValues = iterateHTML(result, '.WeatherDetailsListItem--wxData--kK35q');
             // console.log(detailsValues);
 
             // Combine detailsLabels and detailsValues to form an object
