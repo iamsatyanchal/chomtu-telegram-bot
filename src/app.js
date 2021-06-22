@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
 // Bot instance
-const bot = new Telegraf(BRAD_API);
+const bot = new Telegraf(BOT_API);
 
 // Import services
 import { 
