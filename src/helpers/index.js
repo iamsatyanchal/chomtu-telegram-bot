@@ -16,7 +16,6 @@ const fetchHTML = async (url) => {
 
 // [+] Fetch results from DDG [+]
 const iterateDDG = (result, attr) => {
-    console.log(attr);
     const arr = [];
     result(attr).each((i, element) => {
         const obj = {};

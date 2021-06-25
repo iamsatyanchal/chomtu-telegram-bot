@@ -334,7 +334,9 @@ bot.command("help", (ctx) => {
             `/covind- Returns district wise covid data (India)\n` +
             `/wiki- Wikipedia\n` +
             `/lyrics- Search for lyrics of a song (*English*)\n` + 
-            `/saavn- Search for hindi song lyrics\n` 
+            `/saavn- Search for hindi song lyrics\n` + 
+            `/ddg- Search results from DuckDuckGo\n` +  
+            `/yt- [BETA] Download youtube video\n` 
     );
 });
 
