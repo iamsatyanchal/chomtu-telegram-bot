@@ -8,3 +8,4 @@ export { default as getLyrics } from './getLyrics';
 export { default as randomAnimals } from './getRandomAnimals';
 export { default as get } from './getImage';
 export { default as ytdl } from './ytdl';
+export { default as ddg } from './ddg';

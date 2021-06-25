@@ -14,7 +14,24 @@ const fetchHTML = async (url) => {
     return cheerio.load(data);
 };
 
+// [+] Fetch results from DDG [+]
+const iterateDDG = (result, attr) => {
+    console.log(attr);
+    const arr = [];
+    result(attr).each((i, element) => {
+        const obj = {};
+        
+        let key = result(element).text();
+        let value = result(element).attr('href');
+        
+        obj[key] = value;
+        arr.push(obj);
+    })
+    return arr;
+}
+
 export {
     iterateHTML,
-    fetchHTML
+    fetchHTML,
+    iterateDDG
 }

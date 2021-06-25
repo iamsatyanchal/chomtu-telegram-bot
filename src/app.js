@@ -15,7 +15,8 @@ import {
     getLyrics,
     randomAnimals,
     get,
-    ytdl
+    ytdl,
+    ddg
 } from './services';
 
 //  [+] FUNCTION [+]
@@ -308,6 +309,15 @@ bot.command('get', async (ctx) => {
             ]
         }
     })
+});
+
+bot.command('ddg', async (ctx) => {
+    // typing...
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+     const query = getUserMessage(ctx);
+
+     const result = await ddg(query);
+     ctx.replyWithMarkdown(result.markdown);
 })
 
 // [+] HELP [+]
