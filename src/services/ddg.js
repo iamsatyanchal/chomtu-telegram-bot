@@ -2,7 +2,7 @@ import { fetchHTML, iterateLINKS, iterateHTML } from '../helpers'
 
 function toEscapeMSg(str) {
     return str
-        // .replace(/_/gi, "\\_")
+        .replace(/_/gi, "\__")
         // .replace(/-/gi, "\\-")
         // .replace("~", "\\~")
         // .replace(/`/gi, "\\`")
@@ -26,7 +26,7 @@ export default function(query) {
         let links = iterateLINKS(result, '.result__body > .result__snippet')
         let descriptions = iterateHTML(result, '.result__body > .result__snippet');
 
-        for(let x = 0; x < 5; x++) {
+        for(let x = 0; x < 10; x++) {
             let obj = {};
             obj['title'] = title[x].trim();
             obj['link'] = toEscapeMSg(links[x].trim());
