@@ -1,14 +1,16 @@
-import { fetchHTML, iterateDDG } from '../helpers'
+import { fetchHTML, iterateLINKS, iterateHTML } from '../helpers'
 
 function toEscapeMSg(str) {
     return str
-        .replace(/_/gi, "\\_")
+        // .replace(/_/gi, "\\_")
         // .replace(/-/gi, "\\-")
         // .replace("~", "\\~")
         // .replace(/`/gi, "\\`")
         // .replace(/\./g, "\\.")
         // .replace(/\</g, "\\<")
         // .replace(/\>/g, "\\>");
+        // .replace(/\[/g, "\\[")
+        // .replace(/\]/g, "\\]");
 }
 
 export default function(query) {
@@ -17,13 +19,25 @@ export default function(query) {
     return searchResult.then(result => {
 
         let message = '🔍 Search results from DuckDuckGo\n\n';
-        const searches = iterateDDG(result, '.result__a');
 
-        for (let x = 0; x < 10; x++) {
-            for (let [key, value] of Object.entries(searches[x])){
-                message += `${key}:\n${value}\n\n`;
-            }
+        let finalResult = [];
+
+        let title = iterateHTML(result, '.result__body > .result__title');
+        let links = iterateLINKS(result, '.result__body > .result__snippet')
+        let descriptions = iterateHTML(result, '.result__body > .result__snippet');
+
+        for(let x = 0; x < 5; x++) {
+            let obj = {};
+            obj['title'] = title[x].trim();
+            obj['link'] = toEscapeMSg(links[x].trim());
+            obj['description'] = descriptions[x].trim();
+
+            finalResult.push(obj);
         }
+
+        finalResult.forEach(obj => {
+            message += `[${obj['title']}](${obj['link']})\n${obj['description']}\n\n`
+        })
 
         return {
             status: 'success',

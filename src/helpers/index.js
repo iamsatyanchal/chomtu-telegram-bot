@@ -15,16 +15,10 @@ const fetchHTML = async (url) => {
 };
 
 // [+] Fetch results from DDG [+]
-const iterateDDG = (result, attr) => {
+const iterateLINKS = (result, element) => {
     const arr = [];
-    result(attr).each((i, element) => {
-        const obj = {};
-        
-        let key = result(element).text();
-        let value = result(element).attr('href');
-        
-        obj[key] = value;
-        arr.push(obj);
+    result(element).each((i, element) => {
+        arr.push(result(element).attr('href'));
     })
     return arr;
 }
@@ -32,5 +26,5 @@ const iterateDDG = (result, attr) => {
 export {
     iterateHTML,
     fetchHTML,
-    iterateDDG
+    iterateLINKS
 }
