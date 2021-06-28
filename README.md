@@ -16,7 +16,6 @@ A telegram bot to make your life a little bit easier when using telegram with so
 2. Get all your secrets from the following list:
 	* Telegram Bot: [@BotFather](https://t.me/BotFather)
 	* Mapbox API (for weather): [Mapbox.com](https://docs.mapbox.com/help/glossary/access-token/)
-	* Oxford API: [Oxforddictionaries.com](https://developer.oxforddictionaries.com)
 3. Put all your secret tokens in `.env` file as shown in [.env.example](https://github.com/arsen1c/chomtu-telegram-bot/blob/master/.env.example)
 4. Run `npm start` or `node index.js`
 
