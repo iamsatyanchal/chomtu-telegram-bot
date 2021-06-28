@@ -1,52 +1,56 @@
 import axios from 'axios';
-import { OXFORD_APP_ID, OXFORD_APP_KEY } from '../../config';
 
-// Make request
-const searchWord = (word) => {
-    // Full URL of the endpoint
-    let dict_link = `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}`;
+const formatData = (arr, word, prononce) => {
+    let markdown = `📖 *Dictionary*\n\nWord: *${word}*\n${prononce}\n\n`;
 
-    // Grab the data from the end,
-    // put the data in appropriate property of your response object,
-    // return the response object
-    return axios
-        .get(dict_link, {
-            headers: {
-                app_id: OXFORD_APP_ID,
-                app_key: OXFORD_APP_KEY,
-            },
-        })
-        .then((response) => {
-            const responseObject = {
-                status: "success",
-                word: word,
-                definition: response.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0],
-                shortDefinitions: response.data.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions[0],
-                audio: false
-            }
+    arr.forEach(obj => {
+       markdown += `*[${obj['partOfSpeech']}]*\n*Definition*: ${obj['definition']}\n\n` + 
+                    `*Snonyms*: ${obj['synonyms'] || '---'}\n*Examples*: ${obj['example'] || '---'}\n\n` 
+    });
 
-            // If audio found in the response then append audio link.
-            try {
-                responseObject.audioLink = response.data.results[0].lexicalEntries[1].entries[0].pronunciations[1].audioFile;
-                responseObject.audio = true;
-            } finally {
-                return responseObject;
-            }
-            
-        })
-        .catch((err) => {
-            return { status: "fail", err: err };
-        });
+    return markdown;
+}
+
+const whatIs = (word) => {
+    const dictionaryData = axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en_GB/${word}`);
+
+    return dictionaryData.then(({ data: response }) => {
+        const data = response[0];
+        const meanings = data['meanings'];
+
+        // Grab the audio link
+        const audio = data['phonetics'][0]['audio'] || null; 
+        const prononce = data['phonetics'][0]['text']; 
+
+        // Grab the definitions
+        const definitions = [];
+        for(let x = 0; x < meanings.length; x++) {
+            const obj = {};
+
+            // Extract desired elements from the response
+            const partOfSpeech = meanings[x]['partOfSpeech'];
+            const definition = meanings[x]['definitions'][0]['definition'];
+            const synonyms = meanings[x]['definitions'][0]['synonyms'];
+            const example = meanings[x]['definitions'][0]['example'];
+
+            // Fill the object
+            obj['partOfSpeech'] = partOfSpeech;
+            obj['definition'] = definition;
+            obj['synonyms'] = synonyms && synonyms.join(', ');
+            obj['example'] = example;
+
+            // Push the object to the array
+            definitions.push(obj);
+        };
+
+        return { audio: audio, markdown: formatData(definitions, word, prononce) };
+    }).catch(err => {
+        console.log(err.message);
+
+        return { markdown: 'No word found' };
+    })
+
 };
 
-const whatIs = async (word) => {
-    // Calls the searchWord function and pass the word to it
-    const result = await searchWord(word);
-    
-    if (result.status !== "success") {
-        return { status: "fail", markdown: "No word found" };
-    }
-    return result;
-};
 
 export default whatIs;

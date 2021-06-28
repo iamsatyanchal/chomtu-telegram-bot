@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
 // Bot instance
-const bot = new Telegraf(BRAD_API);
+const bot = new Telegraf(BOT_API);
 
 // Import services
 import { 
@@ -154,26 +154,14 @@ bot.command("whatis", async (ctx) => {
         return ctx.reply("Usage: /whatis <query>");
     }
     // call whatIs service and get the result.
-    const result = await whatIs(word);
+    const { audio, markdown } = await whatIs(word);
 
-    // If no word found, send error
-    if (result.status === "fail") {
-        return ctx.reply(result.markdown);
+    await ctx.replyWithMarkdown(markdown);
+
+    if (audio) {
+        await ctx.replyWithAudio(audio);
     }
 
-    // If everything goess well then send markdown and audio, if any.
-    ctx.replyWithMarkdown(
-        `📕 Oxford Dictionary\n\n` +
-            `*Word*:\t ${result.word}\n\n` +
-            `*Definition*:\t ${result.definition}\n\n` +
-            `*Short-Definition*:\t ${result.shortDefinitions}`
-    );
-    // If audio is present then send audio.
-    if (!result.audio) {
-        return null;
-    } else {
-        await ctx.replyWithAudio(result.audioLink);
-    }
 });
 
 // [+] URBAN-DICTIONARY [+]
