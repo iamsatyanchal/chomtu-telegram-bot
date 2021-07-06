@@ -33,14 +33,14 @@ const scrapeWeather = async (cityName) => {
 
         return data.then(result => {
             // Grab city, temp, aqi, weather from them HTML
-            const city = result('.CurrentConditions--location--1Ayv3').text();
+            const city = result('.CurrentConditions--location--2_osB').text();
             const temp = result('span[data-testid=TemperatureValue]').text().split('°')[0];
             const aqi = result('text[data-testid="DonutChartValue"]').text();
-            const currentWeather = result('.CurrentConditions--phraseValue--2xXSr').text();
-            const lastUpdated = result('.CurrentConditions--timestamp--1SWy5').text().split('As of').join('');
-            const detailsLabels = iterateHTML(result, '.WeatherDetailsListItem--label--3JSSI');
+            const currentWeather = result('.CurrentConditions--phraseValue--17s79').text();
+            const lastUpdated = result('.CurrentConditions--timestamp--3_-CV').text().split('As of').join('');
+            const detailsLabels = iterateHTML(result, '.WeatherDetailsListItem--label---UIj0');
             // console.log(detailsLabels);
-            const detailsValues = iterateHTML(result, '.WeatherDetailsListItem--wxData--23DP5');
+            const detailsValues = iterateHTML(result, '.WeatherDetailsListItem--wxData--2bzvn');
             // console.log(detailsValues);
 
             // Combine detailsLabels and detailsValues to form an object
