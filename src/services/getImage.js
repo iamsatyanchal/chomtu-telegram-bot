@@ -1,32 +1,43 @@
-import { fetchHTML } from '../helpers';
+import axios from 'axios';
+import { WEB_SEARCH_KEY } from '../../config';
 
 const randomNumber = (max) => {
-	return Math.floor(Math.random() * max - 1);
+	return Math.floor(Math.random() * max);
 }
 
-export default async function getImage (query) {
-	try {
-		let images = [];
-		const imageData = await fetchHTML(`https://www.dogpile.com/serp?qc=images&q=${query}&sc=O9824CiY0HrT20`);
-		imageData(".image > a > img").each((i, img) => {
-			images.push(imageData(img).attr("src"));
-		})
+export default function getImage (query) {
+	var options = {
+	  method: 'GET',
+	  url: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
+	  params: {
+	    q: `${query}`,
+	    pageNumber: '1',
+	    pageSize: '20',
+	    autoCorrect: 'true',
+	    safeSearch: 'false'
+	  },
+	  headers: {
+	    'x-rapidapi-key': WEB_SEARCH_KEY,
+	    'x-rapidapi-host': 'contextualwebsearch-websearch-v1.p.rapidapi.com'
+	  }
+	};
 
-		const imageNumber = randomNumber(images.length);
-		let image = await images[imageNumber]
-
-		if (!image) {
-			image = await images[randomNumber(images.length)]
+	return axios.request(options).then(function (response) {
+		const { data } = response;
+		const results = data.value;
+		
+		if (results.length) {
+			const imageLink = results[randomNumber(results.length)]['url'];
+			
+			return {
+				status: 'success',
+				url: imageLink
+			}
 		}
-
-		return ({
-			"status": "success",
-			"data": image,
-			"url": image
-		})
-
-	} catch (e) {
-	    console.log(e);
-		return {"status": "fail", "msg": e.message}
-	}
+		return { status: 'fail', message: 'Nothing found 😐' };
+		// console.log(response.data);
+	}).catch(function (error) {
+		console.error(error);
+		return { status: 'fail', message: error.message };
+	});
 }

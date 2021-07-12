@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import axios from 'axios';
 
 // Bot instance
-const bot = new Telegraf(BRAD_API);
+const bot = new Telegraf(BOT_API);
 
 // Import services
 import { 
@@ -280,16 +280,13 @@ bot.command('get', async (ctx) => {
         return ctx.reply("Usage: /get <query>")
     }
 
-    const result = await get(query.join('+'));
+    const result = await get(query);
 
     if (result.status === "fail") {
-        ctx.reply("Sorry, noting found!");
+        return ctx.reply(result.message);
     }
 
-    if (!result.data) {
-        return ctx.reply("Error Occurred");
-    }
-    await ctx.telegram.sendPhoto(ctx.chat.id, result.data, {
+    await ctx.telegram.sendPhoto(ctx.chat.id, result.url, {
         parse_mode: 'HTML',
         reply_markup: {
             inline_keyboard:[
