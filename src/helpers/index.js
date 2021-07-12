@@ -18,7 +18,7 @@ const fetchHTML = async (url) => {
 const iterateLINKS = (result, element) => {
     const arr = [];
     result(element).each((i, element) => {
-        arr.push(result(element).attr('href'));
+        arr.push(result(element).attr('src'));
     })
     return arr;
 }

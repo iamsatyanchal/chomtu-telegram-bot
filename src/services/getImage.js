@@ -1,43 +1,27 @@
 import axios from 'axios';
-import { WEB_SEARCH_KEY } from '../../config';
+import { iterateLINKS, fetchHTML } from '../helpers';
 
 const randomNumber = (max) => {
-	return Math.floor(Math.random() * max);
+	return Math.floor(Math.random() * max - 1);
 }
 
 export default function getImage (query) {
-	var options = {
-	  method: 'GET',
-	  url: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
-	  params: {
-	    q: `${query}`,
-	    pageNumber: '1',
-	    pageSize: '20',
-	    autoCorrect: 'true',
-	    safeSearch: 'false'
-	  },
-	  headers: {
-	    'x-rapidapi-key': WEB_SEARCH_KEY,
-	    'x-rapidapi-host': 'contextualwebsearch-websearch-v1.p.rapidapi.com'
-	  }
-	};
+	const resp = fetchHTML(`https://searx.run/search?q=${query}&categories=images&language=en-US`);
 
-	return axios.request(options).then(function (response) {
-		const { data } = response;
-		const results = data.value;
-		
-		if (results.length) {
-			const imageLink = results[randomNumber(results.length)]['url'];
+	return resp
+		.then(async (res) => {
+			const images = await iterateLINKS(res, '.result-images > a > img');
 			
-			return {
-				status: 'success',
-				url: imageLink
-			}
-		}
-		return { status: 'fail', message: 'Nothing found 😐' };
-		// console.log(response.data);
-	}).catch(function (error) {
-		console.error(error);
-		return { status: 'fail', message: error.message };
-	});
+			if (images.length) {
+				return {
+					status: 'success',
+					url: images[randomNumber(images.length)]
+				}
+			} 
+			return { status: 'fail', message: 'Nothing found 🤨' }
+		})
+		.catch(err => {
+			console.log(err);
+			return { status: 'fail', message: err.message };
+		})
 }

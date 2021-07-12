@@ -282,18 +282,23 @@ bot.command('get', async (ctx) => {
 
     const result = await get(query);
 
-    if (result.status === "fail") {
-        return ctx.reply(result.message);
-    }
-
-    await ctx.telegram.sendPhoto(ctx.chat.id, result.url, {
-        parse_mode: 'HTML',
-        reply_markup: {
-            inline_keyboard:[
-                [{text: 'Image Link', url: result.url}]
-            ]
+    try {
+        if (result.status === "fail") {
+            return ctx.reply(result.message);
         }
-    })
+
+        await ctx.telegram.sendPhoto(ctx.chat.id, result.url, {
+            parse_mode: 'HTML',
+            reply_markup: {
+                inline_keyboard:[
+                    [{text: 'Image Link', url: result.url}]
+                ]
+            }
+        })
+    } catch (e) {
+        console.log(e);
+        ctx.reply(e.message);
+    }
 });
 
 bot.command('ddg', async (ctx) => {
