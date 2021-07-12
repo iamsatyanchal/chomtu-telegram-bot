@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node -r esm index.js",
-    "dev": "nodemon -r esm index.js"
+    "dev": "nodemon -r esm index.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -18,9 +19,15 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "telegraf": "^3.38.0",
-    "urban-dictionary": "^3.0.0"
+    "urban-dictionary": "^3.0.0",
+    "ytdl-core": "^4.8.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.2"
   }
 }
