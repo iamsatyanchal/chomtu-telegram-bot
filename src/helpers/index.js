@@ -15,10 +15,10 @@ const fetchHTML = async (url) => {
 };
 
 // [+] Fetch results from DDG [+]
-const iterateLINKS = (result, element) => {
+const iterateLINKS = (result, element, attrName = 'href') => {
     const arr = [];
     result(element).each((i, element) => {
-        arr.push(result(element).attr('src'));
+        arr.push(result(element).attr(attrName));
     })
     return arr;
 }

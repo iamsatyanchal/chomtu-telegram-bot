@@ -10,7 +10,7 @@ export default function getImage (query) {
 
 	return resp
 		.then(async (res) => {
-			const images = await iterateLINKS(res, '.result-images > a > img');
+			const images = await iterateLINKS(res, '.result-images > a > img', 'src');
 			
 			if (images.length) {
 				return {
