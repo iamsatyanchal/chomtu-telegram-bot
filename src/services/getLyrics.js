@@ -79,7 +79,7 @@ const saavn = async (song) => {
   }
 
   const data = axios.get(
-    `https://www.jiosaavn.com/api.php?__call=lyrics.getLyrics&ctx=web6dot0&_format=json&_marker=0?_marker=0&lyrics_id=${songDetails.songId}`
+    `https://www.jiosaavn.com/api.php?__call=lyrics.getLyrics&ctx=web6dot0&_format=json&_marker=0?_marker=0&lyrics_id=${songDetails.songId}`,
   );
   return data
     .then((res) => (

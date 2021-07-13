@@ -15,7 +15,7 @@ const getCovidData = async (country) => {
       // Grab the country name from returned HTML
       const countryName = result('.label-counter').text().split('/')[2].trim();
       // Get the FlagURL
-      const flagURL = `https://www.worldometers.info  ${result('div > img').attr('src')}`;
+      const flagURL = `https://www.worldometers.info${result('div > img').attr('src')}`;
       // Data [Array]: Cases / Deaths / Recovered
       // eslint-disable-next-line no-shadow
       const data = result('#maincounter-wrap > .maincounter-number')
