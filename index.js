@@ -1,36 +1,34 @@
 // Import "telegraf" library
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(process.env.BRAD_API);
 const fs = require('fs');
 // Start Command
 bot.start((ctx) => ctx.reply("Hello World!"));
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-let collection = {};
-function commandCollection(name, command) {
-	collection[name] = command;
-	return commandCollection;
-}
+const collection = new Map();
 
 for (const file of commandFiles) {
 	command = require(`./commands/${file}`);
-	// console.log(command.name);
-	commandCollection(command.name, command);
+	// console.log("Command:", command);
+	collection.set(command.name, command);
 }
 console.log(collection);
-// console.log(commands);
-// console.log('Commands Names:', commandNames);
-
 
 bot.on("message", (ctx) => {
-	if (!ctx.message.text.startsWith('/')) return;
-	const command = collection[ctx.message.text.split('/')[1]];
-	try {
-		command.execute(ctx, args=null);
-	} catch {
 
+	if (!ctx.message.text.startsWith('/')) return;
+	
+	let [commandName, ...args] = ctx.message.text.split(' ');
+
+	const command = collection.get(commandName.slice(1));
+
+	try {
+		command.execute(ctx, args=args);
+	} catch(err) {
+		console.log(err);
 	}
 });
 

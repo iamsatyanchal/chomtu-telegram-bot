@@ -1,3 +1,5 @@
 node_modules/
 .env
 package-lock.json
+ref.txt
+testing.js
