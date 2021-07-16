@@ -8,7 +8,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "arsen1c",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",

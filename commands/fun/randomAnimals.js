@@ -1,4 +1,4 @@
-const randomAnimals = require('../services/getAnimails');
+const randomAnimals = require('../../services/getAnimals');
 
 module.exports = {
     name: 'randomAnimals',
