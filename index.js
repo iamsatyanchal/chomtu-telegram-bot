@@ -1,7 +1,14 @@
+import express from 'express';
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
+<<<<<<< HEAD
 const bot = new Telegraf(process.env.BOT_API);
+=======
+
+const bot = new Telegraf(process.env.BRAD_API);
+>>>>>>> origin/refactoring
 const fs = require('fs');
+const app = express();
 
 // Start Command
 bot.start((ctx) => ctx.reply("Hello World!"));
@@ -44,10 +51,12 @@ bot.on("message", (ctx) => {
 	}
 });
 
+app.get('/', (req, res) => res.send('bot online'))
+
 // Function to start the bot
 function startBot() {
 	console.log("Bot is running...");
 	bot.launch();
 }
 
-startBot();
+app.listen(3000, () => startBot());
