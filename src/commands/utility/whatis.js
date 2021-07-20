@@ -1,6 +1,6 @@
 import dictionary from '../../services/dictionary';
 
-module.exports =  {
+module.exports = {
   name: 'whatis',
   description: 'Get meaning of a word from oxford dictionary',
   usage: '<word>',
@@ -12,5 +12,5 @@ module.exports =  {
     if (audio) {
       await ctx.replyWithAudio(audio);
     }
-  }
-}
+  },
+};

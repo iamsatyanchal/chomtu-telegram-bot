@@ -23,17 +23,16 @@ const iterateLINKS = (result, element, attrName = 'href') => {
   return arr;
 };
 
-const getCityCords = (cityName) => (
+const getCityCords = (cityName) =>
   axios
     .get(
-      `http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`,
+      `http://api.mapbox.com/geocoding/v5/mapbox.places/${cityName}.json?access_token=${MAPBOX_KEY}`
     )
     .then((result) => {
       const cords = result.data.features[0].center.reverse();
       const newCord = [...cords.map((cord) => cord.toFixed(3).slice(0, -1))];
       return newCord.join();
     })
-    .catch((err) => console.log(err.message))
-);
+    .catch((err) => console.log(err.message));
 
-export { iterateHTML, fetchHTML, iterateLINKS, getCityCords  };
+export { iterateHTML, fetchHTML, iterateLINKS, getCityCords };
