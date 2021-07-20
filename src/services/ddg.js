@@ -40,7 +40,7 @@ export default function (query) {
       }
 
       finalResult.forEach((obj) => {
-        message += `[${obj.title}](${obj.link})\n${obj.description}\n\n`;
+        message += `[${obj.title}](${obj.link.split('//')[1]})\n${obj.description}\n\n`;
       });
 
       return {
