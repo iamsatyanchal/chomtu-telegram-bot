@@ -1,12 +1,8 @@
 import express from 'express';
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
-<<<<<<< HEAD
-const bot = new Telegraf(process.env.BOT_API);
-=======
 
-const bot = new Telegraf(process.env.BRAD_API);
->>>>>>> origin/refactoring
+const bot = new Telegraf(process.env.BOT_API);
 const fs = require('fs');
 const app = express();
 
