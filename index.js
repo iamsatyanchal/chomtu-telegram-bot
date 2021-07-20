@@ -2,7 +2,7 @@ import express from 'express';
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
 
-const bot = new Telegraf(process.env.BRAD_API);
+const bot = new Telegraf(process.env.BOT_API);
 const fs = require('fs');
 const app = express();
 
