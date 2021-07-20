@@ -22,8 +22,8 @@ for (const folder of commandFolders) {
 }
 
 bot.on("message", (ctx) => {
-
-	if (!ctx.message.text.startsWith('/')) return;
+	
+	if (!ctx.message.text|| !ctx.message.text.startsWith('/')) return;
 	let [commandName, ...args] = ctx.message.text.split(' ');
 	const command = collection.get(commandName.slice(1));
 	if (!command) return;
