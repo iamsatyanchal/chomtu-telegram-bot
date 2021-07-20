@@ -7,39 +7,40 @@ const fs = require('fs');
 bot.start((ctx) => ctx.reply("Hello World!"));
 
 // Grab all command folder in ./commands
-const commandFolders = fs.readdirSync('./commands');
+const commandFolders = fs.readdirSync('./src/commands');
 
 const collection = new Map();
 
 // Get all the commands and put them in collection map
 for (const folder of commandFolders) {
 	// Get files from each command folder
-	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+	const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
+		const command = require(`./src/commands/${folder}/${file}`);
 		collection.set(command.name, command);
 	}
 }
-console.log(collection);
 
 bot.on("message", (ctx) => {
 
 	if (!ctx.message.text.startsWith('/')) return;
-	
 	let [commandName, ...args] = ctx.message.text.split(' ');
-
 	const command = collection.get(commandName.slice(1));
+	if (!command) return;
 
 	if (command.args && !args.length) {
-		console.log(ctx.message.message_id, ctx.message.chat.id);
-		let reply = `You didn't provide any arguments.\n\nUsage: /${command.name} ${command.usage}>`
+		let reply = `You didn't provide any arguments.\n\nUsage: /${command.name} ${command.usage}`
 		return ctx.reply(reply, { reply_to_message_id: ctx.message.message_id });
 	}
 
 	try {
+		// Set chat action to 'typing' or 'sending a file'
+		ctx.telegram.sendChatAction(ctx.chat.id, command.chatAction);
+		if (command.name === 'help') return command.execute(ctx, args=args,  commands=collection);
 		command.execute(ctx, args=args);
 	} catch(err) {
 		console.log(err);
+		ctx.reply(`Uhg, I ran into some errors, but don't worry it should be fixed soon`)
 	}
 });
 
