@@ -50,5 +50,4 @@ function startBot() {
 	bot.launch();
 }
 
-// run startBot function
 startBot();
