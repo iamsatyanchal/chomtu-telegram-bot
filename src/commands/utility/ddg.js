@@ -8,6 +8,7 @@ module.exports =  {
   chatAction: 'typing',
   async execute(ctx, query) {
     const result = await ddg(query);
+    console.log(result.markdown)
     ctx.replyWithMarkdown(result.markdown);
   }
 }
