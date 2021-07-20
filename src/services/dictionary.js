@@ -4,9 +4,9 @@ const formatData = (arr, word, prononce) => {
   let markdown = `📖 *Dictionary*\n\nWord: *${word}*\n${prononce}\n\n`;
 
   arr.forEach((obj) => {
-    markdown
-      += `*[${obj.partOfSpeech}]*\n*Definition*: ${obj.definition}\n\n`
-      + `*Snonyms*: ${obj.synonyms || '---'}\n*Examples*: ${
+    markdown +=
+      `*[${obj.partOfSpeech}]*\n*Definition*: ${obj.definition}\n\n` +
+      `*Snonyms*: ${obj.synonyms || '---'}\n*Examples*: ${
         obj.example || '---'
       }\n\n`;
   });
@@ -16,7 +16,7 @@ const formatData = (arr, word, prononce) => {
 
 const whatIs = (word) => {
   const dictionaryData = axios.get(
-    `https://api.dictionaryapi.dev/api/v2/entries/en_GB/${word}`,
+    `https://api.dictionaryapi.dev/api/v2/entries/en_GB/${word}`
   );
 
   return dictionaryData
@@ -54,9 +54,7 @@ const whatIs = (word) => {
         markdown: formatData(definitions, word, prononce),
       };
     })
-    .catch(() => (
-      { markdown: 'No word found' }
-    ));
+    .catch(() => ({ markdown: 'No word found' }));
 };
 
 export default whatIs;

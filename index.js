@@ -39,7 +39,7 @@ bot.on("message", (ctx) => {
 	try {
 		// Set chat action to 'typing' or 'sending a file'
 		ctx.telegram.sendChatAction(ctx.chat.id, command.chatAction);
-		if (command.name === 'help') return command.execute(ctx, args=args,  commands=collection);
+		if (command.name === 'help') return command.execute(ctx, args=args,  collection);
 		command.execute(ctx, args=args);
 	} catch(err) {
 		console.log(err);

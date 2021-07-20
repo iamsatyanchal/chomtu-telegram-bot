@@ -26,7 +26,7 @@ export default function (query) {
       const links = iterateLINKS(result, '.result__body > .result__snippet');
       const descriptions = iterateHTML(
         result,
-        '.result__body > .result__snippet',
+        '.result__body > .result__snippet'
       );
 
       // eslint-disable-next-line no-plusplus
@@ -40,7 +40,9 @@ export default function (query) {
       }
 
       finalResult.forEach((obj) => {
-        message += `[${obj.title}](${obj.link.split('//')[1]})\n${obj.description}\n\n`;
+        message += `[${obj.title}](${obj.link.split('//')[1]})\n${
+          obj.description
+        }\n\n`;
       });
 
       return {

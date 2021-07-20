@@ -9,10 +9,10 @@ export default function urbanDictionary(query) {
         status: 'success',
         markdown:
           // eslint-disable-next-line quotes
-          `🔰 Urban Dictionary\n\n`
-          + `*Word:*\t ${query.join(' ')}\n\n`
-          + `*Definition:*\n${result[0].definition}\n\n`
-          + `*Example[s]:*\n${result[0].example}`,
+          `🔰 Urban Dictionary\n\n` +
+          `*Word:*\t ${query.join(' ')}\n\n` +
+          `*Definition:*\n${result[0].definition}\n\n` +
+          `*Example[s]:*\n${result[0].example}`,
       };
       return resp;
     })

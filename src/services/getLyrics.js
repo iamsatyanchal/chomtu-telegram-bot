@@ -3,7 +3,7 @@ import { fetchHTML, iterateHTML } from '../helpers';
 
 const lyreka = async (songName) => {
   const baseURL = `https://www.lyreka.com/song/${songName.join('-')}-lyrics`;
-  
+
   const html = fetchHTML(baseURL);
 
   return html
@@ -14,7 +14,7 @@ const lyreka = async (songName) => {
       // Get Artist Name
       const artist = iterateHTML(
         result,
-        'div.col-8 > h1 > b > a.artist-name',
+        'div.col-8 > h1 > b > a.artist-name'
       ).join(', ');
 
       // Get the Lyrics Div.
@@ -43,25 +43,27 @@ const lyreka = async (songName) => {
 const getSongDetails = (song) => {
   const data = axios.get(`https://saavn.me/search?song=${song}`);
 
-  return data
-    .then((res) => {
-      const songInfo = res.data[0];
+  return (
+    data
+      .then((res) => {
+        const songInfo = res.data[0];
 
-      if (!res.data[0] > 0) {
-        return {  success: true, message: 'No song found' };
-      }
+        if (!res.data[0] > 0) {
+          return { success: true, message: 'No song found' };
+        }
 
-      return {
-        success: true,
-        songId: songInfo.song_id,
-        songName: songInfo.song_name,
-        albumName: songInfo.album_name,
-        year: songInfo.year,
-        hasLyrics: songInfo.song_has_lyrics,
-      };
-    })
-    // eslint-disable-next-line no-console
-    .catch((err) => console.log(err.message));
+        return {
+          success: true,
+          songId: songInfo.song_id,
+          songName: songInfo.song_name,
+          albumName: songInfo.album_name,
+          year: songInfo.year,
+          hasLyrics: songInfo.song_has_lyrics,
+        };
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.log(err.message))
+  );
 };
 
 const saavn = async (song) => {
@@ -77,19 +79,17 @@ const saavn = async (song) => {
   }
 
   const data = axios.get(
-    `https://www.jiosaavn.com/api.php?__call=lyrics.getLyrics&ctx=web6dot0&_format=json&_marker=0?_marker=0&lyrics_id=${songDetails.songId}`,
+    `https://www.jiosaavn.com/api.php?__call=lyrics.getLyrics&ctx=web6dot0&_format=json&_marker=0?_marker=0&lyrics_id=${songDetails.songId}`
   );
   return data
-    .then((res) => (
-      {
-        success: true,
-        markdown:
-          `🎶 *${songDetails.songName}*\n`
-          + `Album: *${songDetails.albumName}*\n`
-          + `Year: *${songDetails.year}*\n\n`
-          + `${res.data.lyrics.replace(/<br\s*\/?>/gm, '\n')}`,
-      }
-    ))
+    .then((res) => ({
+      success: true,
+      markdown:
+        `🎶 *${songDetails.songName}*\n` +
+        `Album: *${songDetails.albumName}*\n` +
+        `Year: *${songDetails.year}*\n\n` +
+        `${res.data.lyrics.replace(/<br\s*\/?>/gm, '\n')}`,
+    }))
     .catch((err) => {
       return { markdown: 'Error occured' };
     });

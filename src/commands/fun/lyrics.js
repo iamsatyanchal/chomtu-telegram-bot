@@ -1,6 +1,6 @@
 import getLyrics from '../../services/getLyrics';
 
-module.exports =  {
+module.exports = {
   name: 'lyrics',
   description: 'Get lyrics of songs [English]',
   args: true,
@@ -8,22 +8,22 @@ module.exports =  {
   chatAction: 'typing',
   async execute(ctx, songName) {
     const resultObj = await getLyrics.lyreka(songName);
-    
+
     if (resultObj.success) {
       try {
         await ctx.replyWithMarkdown(
-          `*🎶 Song Name:* ${resultObj.song}\n`
-            + `*Artist[s]:* ${resultObj.artist}\n\n`
-            + `*Lyrics*:\n${resultObj.lyrics}\n`
-            + `[Cover](${resultObj.cover})`,
-        )
+          `*🎶 Song Name:* ${resultObj.song}\n` +
+            `*Artist[s]:* ${resultObj.artist}\n\n` +
+            `*Lyrics*:\n${resultObj.lyrics}\n` +
+            `[Cover](${resultObj.cover})`
+        );
       } catch {
         await ctx.replyWithMarkdown(
-          `😳 Song is too long, read the lyrics [here](${resultObj.url})\n`,
+          `😳 Song is too long, read the lyrics [here](${resultObj.url})\n`
         );
       }
     } else {
       return ctx.replyWithMarkdown(`${resultObj.message}`);
     }
-  }
-}
+  },
+};

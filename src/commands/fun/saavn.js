@@ -1,6 +1,6 @@
 import getLyrics from '../../services/getLyrics';
 
-module.exports =  {
+module.exports = {
   name: 'saavn',
   description: 'Get lyrics of bollywood songs',
   args: true,
@@ -9,5 +9,5 @@ module.exports =  {
   async execute(ctx, songName) {
     const lyrics = await getLyrics.saavn(songName.join('+'));
     ctx.replyWithMarkdown(lyrics.markdown);
-  }
-}
+  },
+};

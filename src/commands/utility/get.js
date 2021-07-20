@@ -10,20 +10,26 @@ module.exports = {
   usage: '<query>',
   async execute(ctx, query) {
     const resp = fetchHTML(
-      `https://searx.run/search?q=${query.join('%20')}&categories=images&language=en-US`,
+      `https://searx.run/search?q=${query.join(
+        '%20'
+      )}&categories=images&language=en-US`
     );
 
     return resp
       .then(async (res) => {
-        const images = await iterateLINKS(res, '.result-images > a > img', 'src');
+        const images = await iterateLINKS(
+          res,
+          '.result-images > a > img',
+          'src'
+        );
         const image = images[randomNumber(images.length)];
 
         if (images.length) {
           return ctx.telegram.sendPhoto(ctx.chat.id, image, {
             parse_mode: 'HTML',
             reply_markup: {
-              inline_keyboard: [[{ text: 'Image Link', url: image }]]
-            }
+              inline_keyboard: [[{ text: 'Image Link', url: image }]],
+            },
           });
         }
         return ctx.reply('Nothing found 🤨');
@@ -33,5 +39,5 @@ module.exports = {
         console.log(err);
         return ctx.reply(err.message);
       });
-  }
-}
+  },
+};

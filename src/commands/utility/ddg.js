@@ -1,6 +1,6 @@
 import ddg from '../../services/ddg';
 
-module.exports =  {
+module.exports = {
   name: 'ddg',
   description: 'Get search results from DuckDuckGo',
   usage: '<query-to-search>',
@@ -9,5 +9,5 @@ module.exports =  {
   async execute(ctx, query) {
     const result = await ddg(query);
     ctx.replyWithMarkdown(result.markdown);
-  }
-}
+  },
+};

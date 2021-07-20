@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { fetchHTML } from '../helpers'
+import { fetchHTML } from '../helpers';
 
-const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+const capitalizeFirstLetter = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 const getCovidData = async (country) => {
   const baseURL = `https://www.worldometers.info/coronavirus/country/${country}`;
@@ -13,7 +14,9 @@ const getCovidData = async (country) => {
       // Grab the country name from returned HTML
       const countryName = result('.label-counter').text().split('/')[2].trim();
       // Get the FlagURL
-      const flagURL = `https://www.worldometers.info${result('div > img').attr('src')}`;
+      const flagURL = `https://www.worldometers.info${result('div > img').attr(
+        'src'
+      )}`;
       // Data [Array]: Cases / Deaths / Recovered
       // eslint-disable-next-line no-shadow
       const data = result('#maincounter-wrap > .maincounter-number')
@@ -58,13 +61,13 @@ const covid = async (country) => {
   if (result.status) {
     return {
       markdown:
-        `🦠 *Covid:\t ${result.data.countryName}*\n\n`
-        + `*Total Cases:*\t ${result.data.data[0]}\n`
-        + `*Total Deaths:*\t ${result.data.data[1]}\n`
-        + `*Total Recovered:*\t ${result.data.data[2]}\n\n`
-        + `*Updates:*\n${result.data.update}\n\n`
-        + `*Last updated:*\n${result.data.lastUpdated}\n\n`
-        + `[Flag](${result.data.flag})`,
+        `🦠 *Covid:\t ${result.data.countryName}*\n\n` +
+        `*Total Cases:*\t ${result.data.data[0]}\n` +
+        `*Total Deaths:*\t ${result.data.data[1]}\n` +
+        `*Total Recovered:*\t ${result.data.data[2]}\n\n` +
+        `*Updates:*\n${result.data.update}\n\n` +
+        `*Last updated:*\n${result.data.lastUpdated}\n\n` +
+        `[Flag](${result.data.flag})`,
     };
   }
 
@@ -76,7 +79,7 @@ const covid = async (country) => {
 // get Data for India
 const covidIn = (query) => {
   const data = axios.get(
-    'https://api.covid19india.org/state_district_wise.json',
+    'https://api.covid19india.org/state_district_wise.json'
   );
   const district = capitalizeFirstLetter(query);
 
@@ -90,14 +93,14 @@ const covidIn = (query) => {
           return {
             status: 'success',
             markdown:
-              `🦠 Covid: *${district}*`
-              + `\n\n*Updates*\nConfirmed: ${data.districtData[district].delta.confirmed}\n`
-              + `Deaths: ${data.districtData[district].delta.deceased}\n`
-              + `Recovered: ${data.districtData[district].delta.recovered}\n\n`
-              + `*Data*\nActive: ${data.districtData[district].active}\n`
-              + `Total Cases: ${data.districtData[district].confirmed}\n`
-              + `Recovered: ${data.districtData[district].recovered}\n`
-              + `Deaths: ${data.districtData[district].deceased}\n`,
+              `🦠 Covid: *${district}*` +
+              `\n\n*Updates*\nConfirmed: ${data.districtData[district].delta.confirmed}\n` +
+              `Deaths: ${data.districtData[district].delta.deceased}\n` +
+              `Recovered: ${data.districtData[district].delta.recovered}\n\n` +
+              `*Data*\nActive: ${data.districtData[district].active}\n` +
+              `Total Cases: ${data.districtData[district].confirmed}\n` +
+              `Recovered: ${data.districtData[district].recovered}\n` +
+              `Deaths: ${data.districtData[district].deceased}\n`,
           };
         }
         // throw new Error('District not found')
