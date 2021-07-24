@@ -1,15 +1,17 @@
 import { fetchHTML, iterateLINKS, iterateHTML } from '../helpers';
 
 function toEscapeMSg(str) {
-  return str.replace(/_/gi, '__');
-  // .replace(/-/gi, "\\-")
+  // return str;
+  return str.replace(/_/gi, '__')
+  .replace(/\-/gi, "\-")
   // .replace("~", "\\~")
   // .replace(/`/gi, "\\`")
-  // .replace(/\./g, "\\.")
-  // .replace(/\</g, "\\<")
-  // .replace(/\>/g, "\\>");
+  .replace(/\./g, "\.")
+  .replace(/\</g, "\<")
+  .replace(/\>/g, "\>")
   // .replace(/\[/g, "\\[")
   // .replace(/\]/g, "\\]");
+  .replace(/\*/g, "\*");
 }
 
 // eslint-disable-next-line func-names
@@ -30,17 +32,23 @@ export default function (query) {
       );
 
       // eslint-disable-next-line no-plusplus
-      for (let x = 0; x < 10; x++) {
-        const obj = {};
-        obj.title = title[x].trim();
-        obj.link = toEscapeMSg(links[x].trim());
-        obj.description = descriptions[x].trim();
-
-        finalResult.push(obj);
+      try {
+        for (let x = 0; x < 10; x++) {
+          const obj = {};
+          obj.title = title[x].trim();
+          obj.link = decodeURIComponent(toEscapeMSg(links[x].match(/https%3A%2F%2F(.*)&rut/)[1]));
+          obj.description = descriptions[x].trim();
+          finalResult.push(obj);
+        }
+      } catch {
+        return {
+          status: 'fail',
+          markdown: 'Error Occurred. Try with different keywords'
+        }
       }
 
       finalResult.forEach((obj) => {
-        message += `[${obj.title}](${obj.link.split('//')[1]})\n${
+        message += `*${obj.title}*\n${obj.link}\n${
           obj.description
         }\n\n`;
       });
