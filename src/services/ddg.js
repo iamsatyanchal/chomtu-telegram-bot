@@ -1,17 +1,17 @@
 import { fetchHTML, iterateLINKS, iterateHTML } from '../helpers';
 
 function toEscapeMSg(str) {
-  // return str;
-  return str.replace(/_/gi, '__')
-  .replace(/\-/gi, "\-")
+  return str
+    .replace(/_/gi, '__')
+    .replace(/\-/gi, '-')
+    .replace(/\./g, '.')
+    .replace(/\</g, '<')
+    .replace(/\>/g, '>')
+    .replace(/\*/g, '*');
   // .replace("~", "\\~")
   // .replace(/`/gi, "\\`")
-  .replace(/\./g, "\.")
-  .replace(/\</g, "\<")
-  .replace(/\>/g, "\>")
   // .replace(/\[/g, "\\[")
   // .replace(/\]/g, "\\]");
-  .replace(/\*/g, "\*");
 }
 
 // eslint-disable-next-line func-names
@@ -20,7 +20,7 @@ export default function (query) {
 
   return searchResult
     .then((result) => {
-      let message = '🔍 Search results from DuckDuckGo\n\n';
+      let message = '🔍 Search result for: ' + `*'${query.join(' ')}'*\n\n`;
 
       const finalResult = [];
 
@@ -30,27 +30,35 @@ export default function (query) {
         result,
         '.result__body > .result__snippet'
       );
+      // If result contains any Ads, start the search from index 1, else 0
+      const startingPoint = title[0].includes(
+        'Viewing ads is privacy protected by DuckDuckGo'
+      )
+        ? 1
+        : 0;
 
-      // eslint-disable-next-line no-plusplus
       try {
-        for (let x = 0; x < 10; x++) {
-          const obj = {};
-          obj.title = title[x].trim();
-          obj.link = decodeURIComponent(toEscapeMSg(links[x].match(/https%3A%2F%2F(.*)&rut/)[1]));
-          obj.description = descriptions[x].trim();
-          finalResult.push(obj);
+        for (let x = startingPoint; x < 10; x++) {
+          if (links[x].match(/https%3A%2F%2F(.*)&rut/)) {
+            const obj = {};
+            obj.title = title[x].trim();
+            obj.link = decodeURIComponent(
+              toEscapeMSg(links[x].match(/https%3A%2F%2F(.*)&rut/)[1])
+            );
+            obj.description = descriptions[x].trim();
+            finalResult.push(obj);
+          }
         }
-      } catch {
+      } catch (err) {
+        console.log(err.message);
         return {
           status: 'fail',
-          markdown: 'Error Occurred. Try with different keywords'
-        }
+          markdown: 'Error Occurred. Try with different keywords',
+        };
       }
 
       finalResult.forEach((obj) => {
-        message += `*${obj.title}*\n${obj.link}\n${
-          obj.description
-        }\n\n`;
+        message += `*${obj.title}*\n${obj.link}\n${obj.description}\n\n`;
       });
 
       return {
