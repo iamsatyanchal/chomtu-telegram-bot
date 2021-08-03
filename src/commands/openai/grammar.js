@@ -2,8 +2,8 @@ import axios from 'axios';
 import { OPEN_AI_KEY } from '../../config';
 
 module.exports = {
-  name: 'grammer',
-  description: '*[OpenAI Beta]* Corrects the grammer',
+  name: 'grammar',
+  description: '*[OpenAI Beta]* Corrects the grammar',
   usage: '<a-broke-english-sentence>',
   args: true,
   chatAction: 'typing',
