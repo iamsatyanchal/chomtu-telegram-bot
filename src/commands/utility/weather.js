@@ -111,7 +111,7 @@ module.exports = {
       await ctx.telegram.sendMessage(ctx.chat.id, result.markdown, {
         parse_mode: 'HTML',
         reply_markup: {
-          inline_keyboard: [[{ text: 'Oepn on weather.com', url: result.url }]],
+          inline_keyboard: [[{ text: 'Open on weather.com', url: result.url }]],
         },
       });
     } catch (err) {
