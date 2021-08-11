@@ -2,12 +2,9 @@ import express from 'express';
 import { BRAD_API, BOT_API } from './src/config';
 const { Telegraf } = require("telegraf");
 
-const bot = new Telegraf(BOT_API);
+const bot = new Telegraf(BRAD_API);
 const fs = require('fs');
 const app = express();
-
-// Start Command
-bot.start((ctx) => ctx.reply("Hello World!"));
 
 // Grab all command folder in ./commands
 const commandFolders = fs.readdirSync('./src/commands');
@@ -25,10 +22,15 @@ for (const folder of commandFolders) {
 }
 
 bot.on("message", (ctx) => {
+
+	if (!ctx.message.text||!ctx.message.text.startsWith('/')) return;
 	
-	if (!ctx.message.text|| !ctx.message.text.startsWith('/')) return;
+	const commandText = ctx.message.text.match(/\/[a-z]*/)[0];
+	
+	if (!collection.has(commandText.substr(1))) return;
+	
 	let [commandName, ...args] = ctx.message.text.split(' ');
-	const command = collection.get(commandName.slice(1));
+	const command = collection.get(commandName.substr(1));
 	if (!command) return;
 
 	if (command.args && !args.length) {
