@@ -35,7 +35,7 @@ const getWeather = async (cityName) => {
         const aqi = result('text[data-testid="DonutChartValue"]').text();
         // Current Weather
         const currentWeather = result(
-          '.CurrentConditions--tempValue--3a50n'
+          '.CurrentConditions--phraseValue--2Z18W'
         ).text();
         // Last updated
         const lastUpdated = result('.CurrentConditions--timestamp--23dfw')
@@ -66,8 +66,8 @@ const getWeather = async (cityName) => {
           url: baseURL,
           markdown:
             `<b>${city}</b>\n\n` +
-            `🌡 <b>Temperature:</b> ${temp}°\n` +
-            `🌥 <b>Weather:</b> ${currentWeather}\n\n` +
+            `🌥 <b>Weather:</b> ${currentWeather}\n` +
+            `🌡 <b>Temperature:</b> ${temp}°\n\n` +
             `🌬 <b>Wind:</b> ${details.Wind.split('Wind Direction').join(
               ' '
             )}\n` +
