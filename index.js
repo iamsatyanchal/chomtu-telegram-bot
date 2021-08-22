@@ -1,6 +1,7 @@
 import express from 'express';
 import { BRAD_API, BOT_API } from './src/config';
 const { Telegraf } = require("telegraf");
+const cron = require('node-cron');
 
 const bot = new Telegraf(BOT_API);
 const fs = require('fs');
@@ -57,4 +58,10 @@ function startBot() {
 	bot.launch();
 }
 
-app.listen(3000, () => startBot());
+app.listen(3000, () => {
+	startBot();
+	cron.schedule('*/1 * * * *', () => {
+		bot.stop();
+		startBot();
+	})	
+});
