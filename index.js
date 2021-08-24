@@ -64,7 +64,7 @@ function startBot() {
 
 app.listen(3000, () => {
   startBot();
-  cron.schedule('*/5 * * * *', () => {
+  cron.schedule('*/1 * * * *', () => {
     bot.stop();
     startBot();
   });
