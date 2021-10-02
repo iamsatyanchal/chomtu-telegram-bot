@@ -53,7 +53,7 @@ bot.on('message', (ctx) => {
   }
 });
 
-app.get('/', (req, res) => res.send('bot online'));
+app.get('/', (_req, res) => res.send('bot online'));
 
 // Function to start the bot
 function startBot() {

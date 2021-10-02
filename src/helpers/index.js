@@ -15,7 +15,7 @@ const fetchHTML = async (url) => {
   return cheerio.load(data);
 };
 
-const iterateLINKS = (result, element, attrName = 'href') => {
+const iterateLINKS = (result, element, attrName='href') => {
   const arr = [];
   result(element).each((i, elementName) => {
     arr.push(result(elementName).attr(attrName));
