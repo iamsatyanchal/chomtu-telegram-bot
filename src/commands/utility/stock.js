@@ -17,7 +17,6 @@ module.exports = {
         let oneDayReturn = iterateHTML(html, ".stock_item > small")[2];
         let cons = iterateHTML(html , "div#cons > div > div > ul > li");
         let pros = iterateHTML(html , "div#pros > div > div > ul > li > p");
-        let lowHigh = oneDayReturn.includes("-") ? true: false;
 
         let prosData = "";
         let consData = "";
@@ -29,7 +28,7 @@ module.exports = {
         ctx.replyWithMarkdown(`\n`+
           `📊 *${html(".stock_title_name").text().trim()} [${html(".stock_title_mcap").text().trim()}]*\n\n` +
           `🏢 *${html(".stock-industry-category").text().trim()}*\n\n` +
-          `💵 *Current Price:* ${lowHigh ? "📉" : "📈"} ${mainDesc[2].trim()} ${oneDayReturn}\n*Market Cap:* ${mainDesc[0]}\n*PE (TTM):* ${mainDesc[1]}\n\n` +
+          `💵 *Current Price:* ${mainDesc[2].trim()} ${oneDayReturn}\n*Market Cap:* ${mainDesc[0]}\n*PE (TTM):* ${mainDesc[1]}\n\n` +
           `✅ *Pros:*${prosData}\n\n` +
           `🚫 *Cons:*${consData}`
         );

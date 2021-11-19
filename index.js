@@ -2,7 +2,7 @@ import express from 'express';
 import { BRAD_API, BOT_API } from './src/config';
 const { Telegraf } = require('telegraf');
 
-const bot = new Telegraf(BRAD_API);
+const bot = new Telegraf(BOT_API);
 const fs = require('fs');
 const app = express();
 
